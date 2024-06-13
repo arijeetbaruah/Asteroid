@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "../build/GameStateMachine.h"
+#include "../include/GameStateMachine.h"
 
 int main()
 {
@@ -18,10 +18,10 @@ int main()
                 window.close();
             }
         }
-        game.Update(elapsed);
+        game.update(elapsed);
 
         window.clear();
+        game.render(window);
         window.display();
-        game.Render(window);
     }
 }
