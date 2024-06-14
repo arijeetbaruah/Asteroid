@@ -1,10 +1,10 @@
 #include "../include/GameStateMachine.h"
 #include "../include/MainMenuGameState.h"
+#include "../include/Game.h"
 #include "spdlog/spdlog.h"
 
-GameStateMachine::GameStateMachine() : mainMenuState(std::make_shared<MainMenuGameState>())
+GameStateMachine::GameStateMachine(Game* mGame) : game(mGame)
 {
-	setState(mainMenuState);
 }
 
 void GameStateMachine::setState(std::shared_ptr<BaseGameState> state)

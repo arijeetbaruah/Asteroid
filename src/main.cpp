@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "../include/GameStateMachine.h"
+#include "../include/Game.h"
 
 int main()
 {
@@ -7,7 +7,7 @@ int main()
     window.setFramerateLimit(144);
 
     sf::Clock clock;
-    GameStateMachine game;
+    Game game;
     while (window.isOpen())
     {
         sf::Time elapsed = clock.restart();

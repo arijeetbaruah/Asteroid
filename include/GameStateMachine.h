@@ -2,17 +2,17 @@
 
 #include <SFML/Graphics.hpp>
 
-class MainMenuGameState;
 class BaseGameState;
+class Game;
 
 class GameStateMachine
 {
 private:
-	std::shared_ptr<MainMenuGameState> mainMenuState;
 	std::shared_ptr<BaseGameState> currentState;
+	Game* game;
 
 public:
-	GameStateMachine();
+	GameStateMachine(Game* mGame);
 	void setState(std::shared_ptr<BaseGameState> state);
 	void update(sf::Time& time);
 	void render(sf::RenderWindow& window);
