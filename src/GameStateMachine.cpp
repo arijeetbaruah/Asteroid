@@ -24,7 +24,7 @@ void GameStateMachine::update(sf::Time& time)
 	currentState->update(time);
 }
 
-void GameStateMachine::render(sf::RenderWindow& window)
+void GameStateMachine::render()
 {
-	currentState->render(window);
+	currentState->render();
 }

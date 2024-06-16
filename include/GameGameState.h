@@ -1,33 +1,28 @@
 #pragma once
+
 #include "./BaseGameState.h"
-#include <SFML/Graphics.hpp>
 
 class Game;
-class Text;
-class Button;
 class Sprite;
+class Player;
 
-class MainMenuGameState : public BaseGameState
+class GameGameState : public BaseGameState
 {
 private:
 	Game* game;
 
 private:
-	Text* mainMenuText;
-	Button* startBtn;
-	Button* exitBtn;
 	Sprite* backgroundSprite;
+	Player* player;
 
 public:
-	MainMenuGameState(Game* mGame);
-	~MainMenuGameState();
+	GameGameState(Game* mGame);
+	~GameGameState();
 
+	// Inherited via BaseGameState
 	void enter() override;
-
 	void update(sf::Time elapsed) override;
 	void render() override;
-
 	void exit() override;
-
 };
 

@@ -15,5 +15,5 @@ public:
 	GameStateMachine(Game* mGame);
 	void setState(std::shared_ptr<BaseGameState> state);
 	void update(sf::Time& time);
-	void render(sf::RenderWindow& window);
+	void render();
 };
