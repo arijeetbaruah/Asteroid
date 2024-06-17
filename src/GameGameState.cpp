@@ -2,6 +2,7 @@
 #include "../include/Game.h"
 #include "../include/Sprite.h"
 #include "../include/Player.h"
+#include "../include/EntityManager.h"
 
 GameGameState::GameGameState(Game* mGame) : game(mGame)
 {
@@ -17,6 +18,8 @@ GameGameState::~GameGameState()
 
 void GameGameState::enter()
 {
+	game->getEntityManager()->addEntity(player);
+
 	backgroundSprite->setScale(4, 3);
 	backgroundSprite->setPosition(game->window.getSize().x / 2, game->window.getSize().y / 2);
 	player->setPosition(100, 100);
@@ -25,13 +28,11 @@ void GameGameState::enter()
 
 void GameGameState::update(sf::Time elapsed)
 {
-	player->update(elapsed);
 }
 
 void GameGameState::render()
 {
 	backgroundSprite->render();
-	player->render();
 }
 
 void GameGameState::exit()

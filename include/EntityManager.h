@@ -14,7 +14,8 @@ private:
 public:
 	EntityManager(Game* aGame);
 
-	void AddEntity(BaseEntity* entity);
+	void addEntity(BaseEntity* entity);
+	void clearEntities();
 
 	void update(sf::Time& elapsed);
 	void render();

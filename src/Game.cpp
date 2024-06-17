@@ -41,6 +41,7 @@ void Game::run()
 
 void Game::setState(std::shared_ptr<BaseGameState> state)
 {
+    entityManager->clearEntities();
 	stateMachine->setState(state);
 }
 
@@ -57,9 +58,11 @@ void Game::StartGame()
 void Game::update(sf::Time& elapsed)
 {
 	stateMachine->update(elapsed);
+    entityManager->update(elapsed);
 }
 
 void Game::render()
 {
-	stateMachine->render();
+    stateMachine->render();
+    entityManager->render();
 }

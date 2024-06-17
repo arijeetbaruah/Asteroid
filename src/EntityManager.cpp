@@ -6,9 +6,14 @@ EntityManager::EntityManager(Game* aGame) : game(aGame)
 {
 }
 
-void EntityManager::AddEntity(BaseEntity* entity)
+void EntityManager::addEntity(BaseEntity* entity)
 {
 	registry.push_back(entity);
+}
+
+void EntityManager::clearEntities()
+{
+	registry.clear();
 }
 
 void EntityManager::update(sf::Time& elapsed)
