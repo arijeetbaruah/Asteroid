@@ -10,11 +10,13 @@ private:
 	sf::Vector2f direction;
 
 	float lifeSpan;
+	bool hitPlayer;
 
 public:
-	Bullet(Game* aGame, sf::Color aColor);
+	Bullet(Game* aGame, sf::Color aColor, bool aHitPlayer);
 
 	void reset();
+	bool canHitPlayer() const;
 
 	void setPosition(sf::Vector2f aPosition);
 	void setPosition(float x, float y);

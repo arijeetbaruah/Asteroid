@@ -20,6 +20,8 @@ public:
 	void setScale(sf::Vector2f scale);
 	void setScale(float x, float y);
 
+	void setTextureRect(sf::IntRect rect);
+
 	void setPosition(sf::Vector2f aPosition);
 	void setPosition(float x, float y);
 	sf::Vector2f getPosition() const;

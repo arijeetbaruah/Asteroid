@@ -1,10 +1,11 @@
 #include "../include/Bullet.h"
 #include "../include/Game.h"
 
-Bullet::Bullet(Game* aGame, sf::Color aColor):
+Bullet::Bullet(Game* aGame, sf::Color aColor, bool aHitPlayer):
 	BaseEntity(aGame),
 	circle(sf::CircleShape(10)),
-	lifeSpan(5)
+	lifeSpan(5),
+	hitPlayer(aHitPlayer)
 {
 	circle.setFillColor(aColor);
 	setActive(false);
@@ -18,6 +19,11 @@ void Bullet::reset()
 void Bullet::setPosition(sf::Vector2f aPosition)
 {
 	circle.setPosition(aPosition);
+}
+
+bool Bullet::canHitPlayer() const
+{
+	return hitPlayer;
 }
 
 void Bullet::setPosition(float x, float y)
@@ -53,7 +59,7 @@ void Bullet::update(sf::Time& elapsed)
 		setActive(false);
 	}
 
-	sf::Vector2f movement = sf::Vector2f(direction.x * 200 * elapsed.asSeconds(), direction.y * 200 * elapsed.asSeconds());
+	sf::Vector2f movement = sf::Vector2f(direction.x * 300 * elapsed.asSeconds(), direction.y * 300 * elapsed.asSeconds());
 	circle.move(movement);
 }
 

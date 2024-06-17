@@ -10,7 +10,7 @@
 Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(false), shootCooldownAmount(1), shootCooldown(0)
 {
 	sprite = new Sprite(game, "player.png");
-	bulletPool = new BulletPool(game, 10, sf::Color::Red);
+	bulletPool = new BulletPool(game, 10, sf::Color::Red, false);
 }
 
 Player::~Player()

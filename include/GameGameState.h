@@ -1,10 +1,12 @@
 #pragma once
 
 #include "./BaseGameState.h"
+#include <vector>
 
 class Game;
 class Sprite;
 class Player;
+class Asteroid;
 
 class GameGameState : public BaseGameState
 {
@@ -14,6 +16,8 @@ private:
 private:
 	Sprite* backgroundSprite;
 	Player* player;
+
+	std::vector<Asteroid*> asteroids;
 
 public:
 	GameGameState(Game* mGame);

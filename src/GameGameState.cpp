@@ -2,6 +2,7 @@
 #include "../include/Game.h"
 #include "../include/Sprite.h"
 #include "../include/Player.h"
+#include "../include/Asteroid.h"
 #include "../include/EntityManager.h"
 
 GameGameState::GameGameState(Game* mGame) : game(mGame), player(0)
@@ -19,6 +20,8 @@ void GameGameState::enter()
 {
 	player = new Player(game);
 	game->getEntityManager()->addEntity(player);
+	Asteroid* asteroid = new Asteroid(game);
+	game->getEntityManager()->addEntity(asteroid);
 
 	backgroundSprite->setScale(4, 3);
 	backgroundSprite->setPosition(game->window.getSize().x / 2, game->window.getSize().y / 2);

@@ -26,6 +26,11 @@ void Sprite::setScale(float x, float y)
     sprite.setScale(x, y);
 }
 
+void Sprite::setTextureRect(sf::IntRect rect)
+{
+    sprite.setTextureRect(rect);
+}
+
 void Sprite::setPosition(sf::Vector2f aPosition)
 {
     sprite.setPosition(aPosition);

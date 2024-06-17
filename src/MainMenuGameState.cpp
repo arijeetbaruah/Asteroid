@@ -7,7 +7,7 @@
 
 MainMenuGameState::MainMenuGameState(Game* mGame): game(mGame)
 {
-	mainMenuText = new Text(game, "PlayfairDisplay.ttf", "My Custom Game");
+	mainMenuText = new Text(game, "PlayfairDisplay.ttf", "Asteroid");
 	startBtn = new Button(game, "PlayfairDisplay.ttf", "Start");
 	exitBtn = new Button(game, "PlayfairDisplay.ttf", "Quit");
 	backgroundSprite = new Sprite(game, "starBG.jpg");
