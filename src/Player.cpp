@@ -8,7 +8,6 @@
 Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(false)
 {
 	sprite = new Sprite(game, "player.png");
-	game->AddEntity(this);
 }
 
 Player::~Player()
@@ -77,7 +76,7 @@ void Player::handleInput()
 
 void Player::render()
 {
-	if (isActive)
+	if (!isActive())
 	{
 		return;
 	}
@@ -87,7 +86,7 @@ void Player::render()
 
 void Player::update(sf::Time& elapsed)
 {
-	if (isActive)
+	if (!isActive())
 	{
 		return;
 	}

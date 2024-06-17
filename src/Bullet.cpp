@@ -13,7 +13,7 @@ Bullet::Bullet(Game* aGame, sf::Color aColor, sf::Vector2f aPosition, sf::Vector
 
 void Bullet::render()
 {
-	if (isActive)
+	if (!isActive())
 	{
 		return;
 	}
@@ -23,7 +23,7 @@ void Bullet::render()
 
 void Bullet::update(sf::Time& elapsed)
 {
-	if (isActive)
+	if (!isActive())
 	{
 		return;
 	}

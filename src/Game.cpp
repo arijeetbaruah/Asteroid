@@ -2,6 +2,7 @@
 #include "../include/BaseGameState.h"
 #include "../include/GameStateMachine.h"
 #include "../include/MainMenuGameState.h"
+#include "../include/EntityManager.h"
 #include "../include/GameGameState.h"
 
 Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
