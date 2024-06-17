@@ -5,13 +5,20 @@
 
 class Game;
 class Sprite;
+class BulletPool;
 
 class Player : public BaseEntity
 {
 private:
 	Sprite* sprite;
 
+	BulletPool* bulletPool;
+
 	sf::Vector2f movementDirection;
+
+	float shootCooldown;
+	float shootCooldownAmount;
+
 	bool isMoving;
 	bool isRotating;
 
@@ -35,7 +42,7 @@ public:
 	void setScale(float x, float y);
 	void setScale(sf::Vector2f scale);
 
-	void handleInput();
+	void handleInput(sf::Time& elapsed);
 
 	// Inherited via BaseEntity
 	void render() override;
@@ -46,7 +53,7 @@ public:
 private:
 	void wrapPlayer();
 	void movementInput();
-	void shootInput();
+	void shootInput(sf::Time& elapsed);
 
-	void Shoot();
+	void Shoot(sf::Time& elapsed);
 };

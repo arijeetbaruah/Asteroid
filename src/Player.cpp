@@ -1,13 +1,16 @@
 #include "../include/Player.h"
 #include "../include/Sprite.h"
 #include "../include/Game.h"
+#include "../include/Bullet.h"
+#include "../include/BulletPool.h"
 #include "spdlog/spdlog.h"
 
 #include <cmath>
 
-Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(false)
+Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(false), shootCooldownAmount(1), shootCooldown(0)
 {
 	sprite = new Sprite(game, "player.png");
+	bulletPool = new BulletPool(game, 10, sf::Color::Red);
 }
 
 Player::~Player()
@@ -68,10 +71,10 @@ void Player::setScale(sf::Vector2f scale)
 	sprite->setScale(scale);
 }
 
-void Player::handleInput()
+void Player::handleInput(sf::Time& elapsed)
 {
 	movementInput();
-	shootInput();
+	shootInput(elapsed);
 }
 
 void Player::render()
@@ -91,7 +94,11 @@ void Player::update(sf::Time& elapsed)
 		return;
 	}
 
-	handleInput();
+	handleInput(elapsed);
+	if (shootCooldown > 0)
+	{
+		shootCooldown -= elapsed.asSeconds();
+	}
 
 	if (isMoving)
 	{
@@ -167,16 +174,28 @@ void Player::movementInput()
 	movementDirection /= movementDirectionMag;
 }
 
-void Player::shootInput()
+void Player::shootInput(sf::Time& elapsed)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		Shoot();
+		Shoot(elapsed);
 	}
 }
 
-void Player::Shoot()
+void Player::Shoot(sf::Time& elapsed)
 {
+	if (shootCooldown <= 0)
+	{
+		shootCooldown = shootCooldownAmount;
+		Bullet* bullet = bulletPool->getBullet();
+		bullet->reset();
+		bullet->setActive(true);
+		bullet->setPosition(getPosition());
+		
+		float radian = sprite->getRotation() * (3.14159265f / 180.0f);
+		sf::Vector2f direction = sf::Vector2f(std::sin(radian), -std::cos(radian));
+		bullet->setDirection(direction);
+	}
 }
 
 void Player::onCollision(BaseEntity* entity)

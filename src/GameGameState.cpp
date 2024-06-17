@@ -4,10 +4,9 @@
 #include "../include/Player.h"
 #include "../include/EntityManager.h"
 
-GameGameState::GameGameState(Game* mGame) : game(mGame)
+GameGameState::GameGameState(Game* mGame) : game(mGame), player(0)
 {
 	backgroundSprite = new Sprite(game, "starBG.jpg");
-	player = new Player(game);
 }
 
 GameGameState::~GameGameState()
@@ -18,6 +17,7 @@ GameGameState::~GameGameState()
 
 void GameGameState::enter()
 {
+	player = new Player(game);
 	game->getEntityManager()->addEntity(player);
 
 	backgroundSprite->setScale(4, 3);

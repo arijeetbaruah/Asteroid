@@ -9,8 +9,16 @@ private:
 	sf::CircleShape circle;
 	sf::Vector2f direction;
 
+	float lifeSpan;
+
 public:
-	Bullet(Game* aGame, sf::Color aColor, sf::Vector2f aPosition, sf::Vector2f aDirection);
+	Bullet(Game* aGame, sf::Color aColor);
+
+	void reset();
+
+	void setPosition(sf::Vector2f aPosition);
+	void setPosition(float x, float y);
+	void setDirection(sf::Vector2f aDirection);
 
 	// Inherited via BaseEntity
 	void render() override;
