@@ -20,14 +20,21 @@ void GameGameState::enter()
 {
 	player = new Player(game);
 	game->getEntityManager()->addEntity(player);
-	Asteroid* asteroid = new Asteroid(game);
-	asteroid->initialize();
-	game->getEntityManager()->addEntity(asteroid);
+
+	SpawnAsteroid();
 
 	backgroundSprite->setScale(4, 3);
 	backgroundSprite->setPosition(game->window.getSize().x / 2, game->window.getSize().y / 2);
 	player->setPosition(100, 100);
 	player->setScale(1, 1);
+}
+
+void GameGameState::SpawnAsteroid(float aSizeMultipler)
+{
+	Asteroid* asteroid = new Asteroid(game);
+	asteroid->initialize(aSizeMultipler);
+	asteroids.push_back(asteroid);
+	game->getEntityManager()->addEntity(asteroid);
 }
 
 void GameGameState::update(sf::Time elapsed)

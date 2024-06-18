@@ -1,11 +1,15 @@
 #include "../include/Asteroid.h"
+
+#include <random>
+#include <memory>
+
 #include "../include/Sprite.h"
 #include "../include/Game.h"
-#include <random>
+#include "../include/GameGameState.h"
 #include "../include/Bullet.h"
 
 
-Asteroid::Asteroid(Game* aGame): BaseEntity(aGame), duration(0), animationIndex(0), isHit(false), direction(0)
+Asteroid::Asteroid(Game* aGame): BaseEntity(aGame), duration(0), animationIndex(0), isHit(false), direction(0), sizeMultipler(0)
 {
 	for (size_t index = 0; index < 3; index++)
 	{
@@ -14,11 +18,17 @@ Asteroid::Asteroid(Game* aGame): BaseEntity(aGame), duration(0), animationIndex(
 	}
 }
 
-void Asteroid::initialize()
+void Asteroid::initialize(float aSizeMultipler)
 {
 	duration = 0;
 	animationIndex = 0;
+	sizeMultipler = aSizeMultipler;
 	isHit = false;
+
+	for (size_t index = 0; index < 3; index++)
+	{
+		sprite[index]->setScale(aSizeMultipler, aSizeMultipler);
+	}
 
 	sf::Vector2f _position = getRandomPosition(game->window);
 	sprite[animationIndex]->setPosition(_position);
@@ -30,14 +40,25 @@ void Asteroid::setDestroy()
 	isHit = true;
 }
 
+bool Asteroid::canHit() const
+{
+	return !isHit;
+}
+
 void Asteroid::setPosition(const sf::Vector2f aPosition)
 {
-	sprite[animationIndex]->setPosition(aPosition);
+	for (size_t index = 0; index < 3; index++)
+	{
+		sprite[index]->setPosition(aPosition);
+	}
 }
 
 void Asteroid::setPosition(const float x, const float y)
 {
-	sprite[animationIndex]->setPosition(x, y);
+	for (size_t index = 0; index < 3; index++)
+	{
+		sprite[animationIndex]->setPosition(x, y);
+	}
 }
 
 sf::Vector2f Asteroid::getPosition() const
@@ -105,14 +126,19 @@ void Asteroid::updateDestroy(sf::Time& elapsed)
 	{
 		if (animationIndex == 2)
 		{
-			setActive(false);
+			if (sizeMultipler > 0)
+			{
+				initialize(sizeMultipler - 1);
+				std::shared_ptr<GameGameState> state = std::dynamic_pointer_cast<GameGameState>(game->getCurrentGameState());
+				state->SpawnAsteroid(sizeMultipler - 1);
+				state->SpawnAsteroid(sizeMultipler - 1);
+			}
 			return;
 		}
 
 		animationIndex++;
 		duration = 0;
 	}
-	sprite[animationIndex]->setPosition(sprite[0]->getPosition());
 }
 
 sf::Vector2f Asteroid::getRandomPosition(const sf::RenderWindow& window) const

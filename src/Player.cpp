@@ -12,6 +12,8 @@ Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(fal
 {
 	sprite = new Sprite(game, "player.png");
 	bulletPool = new BulletPool(game, 10, sf::Color::Red, false);
+	sf::Vector2u pos = game->window.getSize();
+	setPosition(pos.x / 2.0f, pos.y / 2.0f);
 }
 
 Player::~Player()
@@ -202,7 +204,7 @@ void Player::Shoot(sf::Time& elapsed)
 void Player::onCollision(BaseEntity* entity)
 {
 	Asteroid* asteroid = dynamic_cast<Asteroid*>(entity);
-	if (asteroid != nullptr)
+	if (asteroid != nullptr && asteroid->canHit())
 	{
 		spdlog::info("collision");
 		setActive(false);

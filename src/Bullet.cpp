@@ -36,6 +36,11 @@ void Bullet::setDirection(sf::Vector2f aDirection)
 	direction = aDirection;
 }
 
+sf::Vector2f Bullet::getPosition() const
+{
+	return circle.getPosition();
+}
+
 void Bullet::render()
 {
 	if (!isActive())
@@ -61,6 +66,29 @@ void Bullet::update(sf::Time& elapsed)
 
 	sf::Vector2f movement = sf::Vector2f(direction.x * 300 * elapsed.asSeconds(), direction.y * 300 * elapsed.asSeconds());
 	circle.move(movement);
+}
+
+void Bullet::wrapPlayer()
+{
+	sf::Vector2f position = getPosition();
+	float spriteWidth = getBounds().width;
+	float spriteHeight = getBounds().height;
+
+	if (position.x + spriteWidth < 0) {
+		position.x = game->window.getSize().x;
+	}
+	else if (position.x > game->window.getSize().x) {
+		position.x = -spriteWidth;
+	}
+
+	if (position.y + spriteHeight < 0) {
+		position.y = game->window.getSize().y;
+	}
+	else if (position.y > game->window.getSize().y) {
+		position.y = -spriteHeight;
+	}
+
+	setPosition(position);
 }
 
 void Bullet::onCollision(BaseEntity* entity)

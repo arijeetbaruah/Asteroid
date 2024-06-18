@@ -18,6 +18,7 @@ public:
 	void reset();
 	bool canHitPlayer() const;
 
+	sf::Vector2f getPosition() const;
 	void setPosition(sf::Vector2f aPosition);
 	void setPosition(float x, float y);
 	void setDirection(sf::Vector2f aDirection);
@@ -27,5 +28,8 @@ public:
 	void update(sf::Time& elapsed) override;
 	void onCollision(BaseEntity* entity) override;
 	sf::FloatRect getBounds() override;
+
+private:
+	void wrapPlayer();
 };
 

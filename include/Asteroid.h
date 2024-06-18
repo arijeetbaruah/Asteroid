@@ -12,6 +12,7 @@ class Asteroid : public BaseEntity
 private:
 	std::vector<Sprite*> sprite;
 	float duration;
+	float sizeMultipler;
 
 	size_t animationIndex;
 
@@ -21,8 +22,10 @@ private:
 public:
 	Asteroid(Game* aGame);
 
-	void initialize();
+	void initialize(float aSizeMultipler);
 	void setDestroy();
+
+	bool canHit() const;
 
 	void setPosition(const sf::Vector2f aPosition);
 	void setPosition(const float x, const float y);
