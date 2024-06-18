@@ -1,6 +1,7 @@
 #include "../include/Game.h"
 #include "../include/BaseGameState.h"
 #include "../include/GameStateMachine.h"
+#include "../include/GameOverGameState.h"
 #include "../include/MainMenuGameState.h"
 #include "../include/EntityManager.h"
 #include "../include/GameGameState.h"
@@ -9,7 +10,8 @@ Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
 	window(sf::VideoMode(aWindowSize.x, aWindowSize.y), name),
 	stateMachine(std::make_shared<GameStateMachine>(this)),
 	mainMenuState(std::make_shared<MainMenuGameState>(this)),
-	gameGameState(std::make_shared<GameGameState>(this)),
+    gameGameState(std::make_shared<GameGameState>(this)),
+    gameOverGameState(std::make_shared<GameOverGameState>(this)),
     entityManager(std::make_shared<EntityManager>(this)),
 	windowSize(aWindowSize)
 {
@@ -39,6 +41,11 @@ void Game::run()
     }
 }
 
+void Game::gotoMainMenu()
+{
+    setState(mainMenuState);
+}
+
 void Game::setState(std::shared_ptr<BaseGameState> state)
 {
     entityManager->clearEntities();
@@ -58,6 +65,11 @@ std::shared_ptr<BaseGameState> Game::getCurrentGameState() const
 void Game::StartGame()
 {
 	setState(gameGameState);
+}
+
+void Game::GameOver()
+{
+    setState(gameOverGameState);
 }
 
 void Game::update(sf::Time& elapsed)

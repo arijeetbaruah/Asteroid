@@ -66,6 +66,7 @@ void Bullet::update(sf::Time& elapsed)
 
 	sf::Vector2f movement = sf::Vector2f(direction.x * 300 * elapsed.asSeconds(), direction.y * 300 * elapsed.asSeconds());
 	circle.move(movement);
+	wrapPlayer();
 }
 
 void Bullet::wrapPlayer()

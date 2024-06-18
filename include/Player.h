@@ -43,6 +43,7 @@ public:
 	void setScale(sf::Vector2f scale);
 
 	void handleInput(sf::Time& elapsed);
+	void die();
 
 	// Inherited via BaseEntity
 	void render() override;

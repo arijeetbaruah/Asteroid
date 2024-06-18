@@ -22,7 +22,7 @@ private:
 public:
 	Asteroid(Game* aGame);
 
-	void initialize(float aSizeMultipler);
+	void initialize(float aSizeMultipler, bool useRandomPosition = true);
 	void setDestroy();
 
 	bool canHit() const;

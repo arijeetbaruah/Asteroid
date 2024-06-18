@@ -6,6 +6,7 @@
 class Game;
 class Sprite;
 class Player;
+class Text;
 class Asteroid;
 
 class GameGameState : public BaseGameState
@@ -16,6 +17,9 @@ private:
 private:
 	Sprite* backgroundSprite;
 	Player* player;
+	Text* liveScore;
+
+	int lives;
 
 	std::vector<Asteroid*> asteroids;
 
@@ -30,6 +34,8 @@ public:
 	void exit() override;
 
 public:
-	void SpawnAsteroid(float aSizeMultipler = 3);
+	Asteroid* SpawnAsteroid(float aSizeMultipler = 3, bool useRandomPosition = true);
+	int getLives() const;
+	void setLives(const int aLives);
 };
 
