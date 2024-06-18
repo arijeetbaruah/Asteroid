@@ -3,6 +3,7 @@
 #include "../include/Game.h"
 #include "../include/Bullet.h"
 #include "../include/BulletPool.h"
+#include "../include/Asteroid.h"
 #include "spdlog/spdlog.h"
 
 #include <cmath>
@@ -200,4 +201,11 @@ void Player::Shoot(sf::Time& elapsed)
 
 void Player::onCollision(BaseEntity* entity)
 {
+	Asteroid* asteroid = dynamic_cast<Asteroid*>(entity);
+	if (asteroid != nullptr)
+	{
+		spdlog::info("collision");
+		setActive(false);
+		return;
+	}
 }

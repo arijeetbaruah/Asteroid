@@ -29,6 +29,8 @@ public:
     void setState(std::shared_ptr<BaseGameState> state);
     std::shared_ptr<EntityManager> getEntityManager() const;
 
+    std::shared_ptr<BaseGameState> getCurrentGameState() const;
+
 public:
     void update(sf::Time& elapsed);
     void render();

@@ -21,6 +21,7 @@ void GameGameState::enter()
 	player = new Player(game);
 	game->getEntityManager()->addEntity(player);
 	Asteroid* asteroid = new Asteroid(game);
+	asteroid->initialize();
 	game->getEntityManager()->addEntity(asteroid);
 
 	backgroundSprite->setScale(4, 3);

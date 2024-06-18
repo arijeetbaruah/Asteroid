@@ -50,6 +50,11 @@ std::shared_ptr<EntityManager> Game::getEntityManager() const
     return entityManager;
 }
 
+std::shared_ptr<BaseGameState> Game::getCurrentGameState() const
+{
+    return stateMachine->getCurrentState();
+}
+
 void Game::StartGame()
 {
 	setState(gameGameState);

@@ -71,6 +71,11 @@ sf::FloatRect Sprite::GetBounds() const
     return sprite.getGlobalBounds();
 }
 
+sf::FloatRect Sprite::GetLocalBounds() const
+{
+    return sprite.getLocalBounds();
+}
+
 void Sprite::update(sf::Time& elapsed)
 {
 }

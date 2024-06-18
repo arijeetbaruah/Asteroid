@@ -16,6 +16,7 @@ public:
 	Sprite(Game* game, std::string aTextureFile);
 
 	sf::FloatRect GetBounds() const;
+	sf::FloatRect GetLocalBounds() const;
 
 	void setScale(sf::Vector2f scale);
 	void setScale(float x, float y);

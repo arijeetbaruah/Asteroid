@@ -19,6 +19,11 @@ void GameStateMachine::setState(std::shared_ptr<BaseGameState> state)
 	currentState->enter();
 }
 
+std::shared_ptr<BaseGameState> GameStateMachine::getCurrentState() const
+{
+	return currentState;
+}
+
 void GameStateMachine::update(sf::Time& time)
 {
 	currentState->update(time);
