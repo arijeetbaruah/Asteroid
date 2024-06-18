@@ -18,7 +18,7 @@ Asteroid::Asteroid(Game* aGame): BaseEntity(aGame), duration(0), animationIndex(
 	}
 }
 
-void Asteroid::initialize(float aSizeMultipler)
+void Asteroid::initialize(float aSizeMultipler, bool useRandomPosition)
 {
 	duration = 0;
 	animationIndex = 0;
@@ -30,8 +30,12 @@ void Asteroid::initialize(float aSizeMultipler)
 		sprite[index]->setScale(aSizeMultipler, aSizeMultipler);
 	}
 
-	sf::Vector2f _position = getRandomPosition(game->window);
-	sprite[animationIndex]->setPosition(_position);
+	if (useRandomPosition)
+	{
+		sf::Vector2f _position = getRandomPosition(game->window);
+		sprite[animationIndex]->setPosition(_position);
+	}
+
 	direction = getRandomDirection();
 }
 
@@ -128,11 +132,14 @@ void Asteroid::updateDestroy(sf::Time& elapsed)
 		{
 			if (sizeMultipler > 0)
 			{
-				initialize(sizeMultipler - 1);
+				//initialize(sizeMultipler - 1, false);
 				std::shared_ptr<GameGameState> state = std::dynamic_pointer_cast<GameGameState>(game->getCurrentGameState());
-				state->SpawnAsteroid(sizeMultipler - 1);
-				state->SpawnAsteroid(sizeMultipler - 1);
+				Asteroid* asteroid1 = state->SpawnAsteroid(sizeMultipler - 1, false);
+				asteroid1->setPosition(getPosition());
+				Asteroid* asteroid2 = state->SpawnAsteroid(sizeMultipler - 1, false);
+				asteroid2->setPosition(getPosition());
 			}
+			setActive(false);
 			return;
 		}
 

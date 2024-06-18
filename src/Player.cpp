@@ -4,9 +4,11 @@
 #include "../include/Bullet.h"
 #include "../include/BulletPool.h"
 #include "../include/Asteroid.h"
+#include "../include/GameGameState.h"
 #include "spdlog/spdlog.h"
 
 #include <cmath>
+#include <memory>
 
 Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(false), shootCooldownAmount(1), shootCooldown(0)
 {
@@ -78,6 +80,22 @@ void Player::handleInput(sf::Time& elapsed)
 {
 	movementInput();
 	shootInput(elapsed);
+}
+
+void Player::die()
+{
+	std::shared_ptr<GameGameState> gameGameState = std::dynamic_pointer_cast<GameGameState>(game->getCurrentGameState());
+	gameGameState->setLives(gameGameState->getLives() - 1);
+
+	if (gameGameState->getLives() == 0)
+	{
+		setActive(false);
+		game->GameOver();
+		return;
+	}
+
+	sf::Vector2u pos = game->window.getSize();
+	setPosition(pos.x / 2.0f, pos.y / 2.0f);
 }
 
 void Player::render()
@@ -207,7 +225,7 @@ void Player::onCollision(BaseEntity* entity)
 	if (asteroid != nullptr && asteroid->canHit())
 	{
 		spdlog::info("collision");
-		setActive(false);
+		die();
 		return;
 	}
 }
