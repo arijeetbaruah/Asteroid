@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(CMakeSFMLProject LANGUAGES CXX)
+project(AsteroidGame LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
@@ -22,17 +22,17 @@ include_directories(
     "src"
 )
 
-add_executable(CMakeSFMLProject ${HEADERS} ${HEADERS_PP} ${SOURCES})
-target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics)
-target_link_libraries(CMakeSFMLProject PRIVATE glm::glm)
-target_link_libraries(CMakeSFMLProject PRIVATE spdlog::spdlog)
-target_compile_features(CMakeSFMLProject PRIVATE cxx_std_17)
+add_executable(AsteroidGame ${HEADERS} ${HEADERS_PP} ${SOURCES})
+target_link_libraries(AsteroidGame PRIVATE sfml-graphics)
+target_link_libraries(AsteroidGame PRIVATE glm::glm)
+target_link_libraries(AsteroidGame PRIVATE spdlog::spdlog)
+target_compile_features(AsteroidGame PRIVATE cxx_std_17)
 
 if(WIN32)
     add_custom_command(
-        TARGET CMakeSFMLProject
+        TARGET AsteroidGame
         COMMENT "Copy OpenAL DLL"
-        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:CMakeSFMLProject>
+        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:AsteroidGame>
         VERBATIM)
 endif()
 
