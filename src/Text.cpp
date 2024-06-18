@@ -2,9 +2,15 @@
 #include "../include/Game.h"
 #include "spdlog/spdlog.h"
 
+#if _DEBUG
+#define ASSET_FONTS "../assets/fonts/"
+#else
+#define ASSET_FONTS "./assets/fonts/"
+#endif
+
 Text::Text(Game* aGame, std::string fontFile, std::string aText): game(aGame)
 {
-	if (!font.loadFromFile("../assets/fonts/" + fontFile))
+	if (!font.loadFromFile(ASSET_FONTS + fontFile))
 	{
 		spdlog::error("Font Not found");
 		return;

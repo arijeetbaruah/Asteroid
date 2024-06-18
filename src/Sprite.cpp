@@ -3,9 +3,15 @@
 
 #include "spdlog/spdlog.h"
 
+#if _DEBUG
+#define ASSET_SPRITES "../assets/sprites/"
+#else
+#define ASSET_SPRITES "./assets/sprites/"
+#endif
+
 Sprite::Sprite(Game* aGame, std::string aTextureFile): game(aGame)
 {
-    if (!texture.loadFromFile("../assets/sprites/" + aTextureFile)) {
+    if (!texture.loadFromFile(ASSET_SPRITES + aTextureFile)) {
         spdlog::error("Error loading background image");
         return;
     }
