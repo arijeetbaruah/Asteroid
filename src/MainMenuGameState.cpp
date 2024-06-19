@@ -28,15 +28,21 @@ void MainMenuGameState::enter()
 	mainMenuText->setCharacterSize(100);
 	mainMenuText->setFillColor(sf::Color::Red);
 	mainMenuText->setStyle(sf::Text::Bold);
-	mainMenuText->setPosition(game->window.getSize().x / 2, 300);
+	mainMenuText->setPosition(game->window.getSize().x / 2, 100);
 
 	startBtn->setCharacterSize(100);
 	startBtn->setFillColor(sf::Color::Black);
-	startBtn->setPosition(game->window.getSize().x / 2, 500);
+	startBtn->setPosition(game->window.getSize().x / 2, 300);
 
 	exitBtn->setCharacterSize(100);
 	exitBtn->setFillColor(sf::Color::Black);
-	exitBtn->setPosition(game->window.getSize().x / 2, 700);
+	exitBtn->setPosition(game->window.getSize().x / 2, 500);
+}
+
+void MainMenuGameState::handleInput(sf::Event aEvent)
+{
+	startBtn->handleInput(aEvent);
+	exitBtn->handleInput(aEvent);
 }
 
 void MainMenuGameState::update(sf::Time elapsed)
@@ -66,4 +72,6 @@ void MainMenuGameState::render()
 
 void MainMenuGameState::exit()
 {
+	startBtn->reset();
+	exitBtn->reset();
 }

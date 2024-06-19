@@ -35,6 +35,10 @@ void GameGameState::enter()
 	player->setScale(1, 1);
 }
 
+void GameGameState::handleInput(sf::Event aEvent)
+{
+}
+
 Asteroid* GameGameState::SpawnAsteroid(float aSizeMultipler, bool useRandomPosition)
 {
 	Asteroid* _asteroid = new Asteroid(game);

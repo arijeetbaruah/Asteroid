@@ -23,6 +23,8 @@ public:
 public:
 	Button(Game* game, std::string fontFile, std::string aText);
 
+	void reset();
+
 	void setCharacterSize(unsigned int aSize);
 	void setFillColor(sf::Color aColor);
 	void setStyle(sf::Text::Style aStyle);
@@ -32,6 +34,7 @@ public:
 	void setPosition(sf::Vector2f aPosition);
 	void setPosition(float x, float y);
 
+	void handleInput(sf::Event handleInput);
 	void update(sf::Time& elapsed);
 	void render();
 
