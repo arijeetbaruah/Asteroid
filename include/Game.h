@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 class BaseGameState;
 class GameStateMachine;
@@ -36,6 +37,7 @@ public:
     std::shared_ptr<BaseGameState> getCurrentGameState() const;
 
 public:
+    void handleInput();
     void update(sf::Time& elapsed);
     void render();
 };

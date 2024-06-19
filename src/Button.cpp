@@ -12,6 +12,13 @@ Button::Button(Game* aGame, std::string fontFile, std::string aText): game(aGame
     buttonShape.setOrigin(_bounds.left + _bounds.width / 2.0f, _bounds.top + _bounds.height / 2.0f);
 }
 
+void Button::reset()
+{
+    isHovered = false;
+    isClicked = false;
+    buttonShape.setFillColor(sf::Color::White);
+}
+
 void Button::setCharacterSize(unsigned int aSize)
 {
 	text->setCharacterSize(aSize);
@@ -50,6 +57,19 @@ void Button::setPosition(float x, float y)
     buttonShape.setOrigin(_bounds.left + _bounds.width / 2.0f, _bounds.top + _bounds.height / 2.0f);
 }
 
+void Button::handleInput(sf::Event aEvent)
+{
+    sf::Vector2i mousePos = sf::Mouse::getPosition(game->window);
+    sf::FloatRect buttonRect = buttonShape.getGlobalBounds();
+
+    if (buttonRect.contains(static_cast<sf::Vector2f>(mousePos)) && aEvent.type == sf::Event::MouseButtonPressed && aEvent.mouseButton.button == sf::Mouse::Left) {
+        if (!isClicked) {
+            isClicked = true;
+            onClick();
+        }
+    }
+}
+
 void Button::update(sf::Time& elapsed)
 {
 	sf::Vector2i mousePos = sf::Mouse::getPosition(game->window);
@@ -59,15 +79,6 @@ void Button::update(sf::Time& elapsed)
         if (!isHovered) {
             isHovered = true;
             onHoverEnter();
-        }
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            if (!isClicked) {
-                isClicked = true;
-                onClick();
-            }
-        }
-        else {
-            isClicked = false;
         }
     }
     else {

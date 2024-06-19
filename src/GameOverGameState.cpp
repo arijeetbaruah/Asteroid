@@ -20,6 +20,11 @@ void GameOverGameState::enter()
 	gameOverBtn->setPosition(game->window.getSize().x / 2 - 30, game->window.getSize().y / 2 + 90);
 }
 
+void GameOverGameState::handleInput(sf::Event aEvent)
+{
+	gameOverBtn->handleInput(aEvent);
+}
+
 void GameOverGameState::update(sf::Time elapsed)
 {
 	gameOverBtn->update(elapsed);
@@ -38,4 +43,5 @@ void GameOverGameState::render()
 
 void GameOverGameState::exit()
 {
+	gameOverBtn->reset();
 }

@@ -26,13 +26,7 @@ void Game::run()
     while (window.isOpen())
     {
         sf::Time elapsed = clock.restart();
-        for (auto event = sf::Event{}; window.pollEvent(event);)
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
+        handleInput();
         update(elapsed);
 
         window.clear();
@@ -70,6 +64,20 @@ void Game::StartGame()
 void Game::GameOver()
 {
     setState(gameOverGameState);
+}
+
+void Game::handleInput()
+{
+    for (auto event = sf::Event{}; window.pollEvent(event);)
+    {
+        if (event.type == sf::Event::Closed)
+        {
+            window.close();
+            return;
+        }
+
+        stateMachine->handleInput(event);
+    }
 }
 
 void Game::update(sf::Time& elapsed)

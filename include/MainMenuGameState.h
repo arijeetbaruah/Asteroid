@@ -24,6 +24,7 @@ public:
 
 	void enter() override;
 
+	void handleInput(sf::Event aEvent) override;
 	void update(sf::Time elapsed) override;
 	void render() override;
 
