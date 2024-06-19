@@ -31,7 +31,7 @@ void GameGameState::enter()
 
 	backgroundSprite->setScale(4, 3);
 	backgroundSprite->setPosition(game->window.getSize().x / 2, game->window.getSize().y / 2);
-	player->setPosition(100, 100);
+	player->setPosition(game->window.getSize().x / 2, game->window.getSize().y / 2);
 	player->setScale(1, 1);
 }
 

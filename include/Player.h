@@ -4,6 +4,7 @@
 #include "./BaseEntity.h"
 
 class Game;
+class Trail;
 class Sprite;
 class BulletPool;
 
@@ -21,6 +22,9 @@ private:
 
 	bool isMoving;
 	bool isRotating;
+
+	std::vector<std::shared_ptr<Trail>> trails;
+	float trailCooldown;
 
 public:
 	Player(Game* mGame);
