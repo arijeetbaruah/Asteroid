@@ -5,17 +5,24 @@
 #include "../include/BulletPool.h"
 #include "../include/Asteroid.h"
 #include "../include/GameGameState.h"
+#include "../include/Trail.h"
 #include "spdlog/spdlog.h"
 
 #include <cmath>
 #include <memory>
 
-Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(false), shootCooldownAmount(1), shootCooldown(0)
+Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(false), shootCooldownAmount(1), shootCooldown(0), trailCooldown(0)
 {
 	sprite = new Sprite(game, "player.png");
 	bulletPool = new BulletPool(game, 10, sf::Color::Red, false);
 	sf::Vector2u pos = game->window.getSize();
 	setPosition(pos.x / 2.0f, pos.y / 2.0f);
+
+	for (size_t index = 0; index < 50; index++)
+	{
+		std::shared_ptr<Trail> trail = std::make_shared<Trail>(game);
+		trails.push_back(trail);
+	}
 }
 
 Player::~Player()
@@ -106,6 +113,11 @@ void Player::render()
 	}
 
 	sprite->render();
+
+	for (size_t index = 0; index < trails.size(); index++)
+	{
+		trails[index]->render();
+	}
 }
 
 void Player::update(sf::Time& elapsed)
@@ -121,6 +133,11 @@ void Player::update(sf::Time& elapsed)
 		shootCooldown -= elapsed.asSeconds();
 	}
 
+	if (trailCooldown > 0)
+	{
+		trailCooldown -= elapsed.asSeconds();
+	}
+
 	if (isMoving)
 	{
 		sf::Vector2f movement = getForwardVector();
@@ -128,12 +145,28 @@ void Player::update(sf::Time& elapsed)
 		move(movement);
 
 		wrapPlayer();
+
+		for (size_t index = 0; index < trails.size(); index++)
+		{
+			if (!trails[index]->getEnable() && trailCooldown <= 0)
+			{
+				trailCooldown = 0.3f;
+				trails[index]->setPosition(getPosition());
+				trails[index]->reset();
+				break;
+			}
+		}
 	}
 
 	if (isRotating)
 	{
 		float dir = movementDirection.x > 0 ? 1 : -1;
 		rotate(150 * dir * elapsed.asSeconds());
+	}
+
+	for (size_t index = 0; index < trails.size(); index++)
+	{
+		trails[index]->update(elapsed);
 	}
 }
 
