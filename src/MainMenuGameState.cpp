@@ -1,9 +1,9 @@
-#include "../include/MainMenuGameState.h"
-#include "../include/Game.h"
-#include "../include/Text.h"
+#include "../include/MainMenuGameState.hpp"
+#include "../include/Game.hpp"
+#include "../include/Text.hpp"
 #include "../include/Music.hpp"
-#include "../include/Button.h"
-#include "../include/Sprite.h"
+#include "../include/Button.hpp"
+#include "../include/Sprite.hpp"
 #include "spdlog/spdlog.h"
 
 MainMenuGameState::MainMenuGameState(Game* mGame): game(mGame)

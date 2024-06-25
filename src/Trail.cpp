@@ -1,5 +1,5 @@
-#include "../include/Trail.h"
-#include "../include/Game.h"
+#include "../include/Trail.hpp"
+#include "../include/Game.hpp"
 
 #include <math.h>
 

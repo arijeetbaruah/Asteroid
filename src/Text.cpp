@@ -1,5 +1,5 @@
-#include "../include/Text.h"
-#include "../include/Game.h"
+#include "../include/Text.hpp"
+#include "../include/Game.hpp"
 #include "spdlog/spdlog.h"
 
 #if _DEBUG

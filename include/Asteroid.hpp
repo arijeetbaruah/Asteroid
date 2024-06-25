@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "./BaseEntity.h"
+#include "./BaseEntity.hpp"
 
 class Game;
 class Sprite;

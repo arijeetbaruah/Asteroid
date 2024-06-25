@@ -1,10 +1,10 @@
-#include "../include/Game.h"
-#include "../include/BaseGameState.h"
-#include "../include/GameStateMachine.h"
-#include "../include/GameOverGameState.h"
-#include "../include/MainMenuGameState.h"
-#include "../include/EntityManager.h"
-#include "../include/GameGameState.h"
+#include "../include/Game.hpp"
+#include "../include/BaseGameState.hpp"
+#include "../include/GameStateMachine.hpp"
+#include "../include/GameOverGameState.hpp"
+#include "../include/MainMenuGameState.hpp"
+#include "../include/EntityManager.hpp"
+#include "../include/GameGameState.hpp"
 
 Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
 	window(sf::VideoMode(aWindowSize.x, aWindowSize.y), name),

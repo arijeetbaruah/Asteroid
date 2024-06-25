@@ -1,7 +1,7 @@
-#include "../include/GameOverGameState.h"
-#include "../include/Game.h"
-#include "../include/Text.h"
-#include "../include/Button.h"
+#include "../include/GameOverGameState.hpp"
+#include "../include/Game.hpp"
+#include "../include/Text.hpp"
+#include "../include/Button.hpp"
 
 GameOverGameState::GameOverGameState(Game* aGame): game(aGame)
 {

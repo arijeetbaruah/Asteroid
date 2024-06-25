@@ -1,5 +1,5 @@
-#include "../include/Bullet.h"
-#include "../include/Game.h"
+#include "../include/Bullet.hpp"
+#include "../include/Game.hpp"
 
 Bullet::Bullet(Game* aGame, sf::Color aColor, bool aHitPlayer):
 	BaseEntity(aGame),

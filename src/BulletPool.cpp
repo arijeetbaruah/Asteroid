@@ -1,7 +1,7 @@
-#include "../include/BulletPool.h"
-#include "../include/Game.h"
-#include "../include/EntityManager.h"
-#include "../include/Bullet.h"
+#include "../include/BulletPool.hpp"
+#include "../include/Game.hpp"
+#include "../include/EntityManager.hpp"
+#include "../include/Bullet.hpp"
 
 BulletPool::BulletPool(Game* aGame, size_t aSize, sf::Color aColor, bool aHitPlayer) {
     // Initialize bullets in the pool

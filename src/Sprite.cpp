@@ -1,5 +1,5 @@
-#include "../include/Sprite.h"
-#include "../include/Game.h"
+#include "../include/Sprite.hpp"
+#include "../include/Game.hpp"
 
 #include "spdlog/spdlog.h"
 

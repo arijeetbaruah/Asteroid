@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "./BaseEntity.h"
+#include "./BaseEntity.hpp"
 
 class Game;
 class Trail;
