@@ -5,6 +5,7 @@
 
 class Game;
 class Trail;
+class Audio;
 class Sprite;
 class BulletPool;
 
@@ -25,6 +26,7 @@ private:
 
 	std::vector<std::shared_ptr<Trail>> trails;
 	float trailCooldown;
+	Audio* laserAudio;
 
 public:
 	Player(Game* mGame);

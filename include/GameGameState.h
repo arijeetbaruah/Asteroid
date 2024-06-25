@@ -7,12 +7,14 @@ class Game;
 class Sprite;
 class Player;
 class Text;
+class Music;
 class Asteroid;
 
 class GameGameState : public BaseGameState
 {
 private:
 	Game* game;
+	Music* music;
 
 private:
 	Sprite* backgroundSprite;
@@ -20,6 +22,7 @@ private:
 	Text* liveScore;
 
 	int lives;
+	int score;
 
 	std::vector<Asteroid*> asteroids;
 
@@ -38,5 +41,7 @@ public:
 	Asteroid* SpawnAsteroid(float aSizeMultipler = 3, bool useRandomPosition = true);
 	int getLives() const;
 	void setLives(const int aLives);
+
+	void setScore(const int score);
 };
 

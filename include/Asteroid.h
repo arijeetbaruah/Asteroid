@@ -6,6 +6,7 @@
 
 class Game;
 class Sprite;
+class Audio;
 
 class Asteroid : public BaseEntity
 {
@@ -19,6 +20,8 @@ private:
 	bool isHit;
 	float direction;
 
+	Audio* hitAudio;
+
 public:
 	Asteroid(Game* aGame);
 
@@ -26,6 +29,7 @@ public:
 	void setDestroy();
 
 	bool canHit() const;
+	int getScore() const;
 
 	void setPosition(const sf::Vector2f aPosition);
 	void setPosition(const float x, const float y);

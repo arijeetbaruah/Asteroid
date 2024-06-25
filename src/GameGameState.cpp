@@ -2,16 +2,19 @@
 #include "../include/Game.h"
 #include "../include/Sprite.h"
 #include "../include/Text.h"
+#include "../include/Music.hpp"
 #include "../include/Player.h"
 #include "../include/Asteroid.h"
 #include "../include/EntityManager.h"
 
-GameGameState::GameGameState(Game* mGame) : game(mGame), player(0), lives(3)
+GameGameState::GameGameState(Game* mGame) : game(mGame), player(0), lives(3), score(0)
 {
 	backgroundSprite = new Sprite(game, "starBG.jpg");
 	liveScore = new Text(game, "PlayfairDisplay.ttf", "Score: " + std::to_string(lives));
 	liveScore->setPosition(70, 70);
 	liveScore->setFillColor(sf::Color::Red);
+
+	music = new Music("space-ambience-56265.mp3");
 }
 
 GameGameState::~GameGameState()
@@ -25,7 +28,7 @@ void GameGameState::enter()
 {
 	player = new Player(game);
 	game->getEntityManager()->addEntity(player);
-	liveScore->setText("Score: " + std::to_string(lives));
+	liveScore->setText("Live: " + std::to_string(lives) + " | Score: " + std::to_string(score));
 
 	SpawnAsteroid();
 
@@ -33,6 +36,12 @@ void GameGameState::enter()
 	backgroundSprite->setPosition(game->window.getSize().x / 2, game->window.getSize().y / 2);
 	player->setPosition(game->window.getSize().x / 2, game->window.getSize().y / 2);
 	player->setScale(1, 1);
+
+	music->play();
+	if (!music->getLoop())
+	{
+		music->setLoop(true);
+	}
 }
 
 void GameGameState::handleInput(sf::Event aEvent)
@@ -57,7 +66,13 @@ int GameGameState::getLives() const
 void GameGameState::setLives(const int aLives)
 {
 	lives = std::max(aLives, 0);
-	liveScore->setText("Score: " + std::to_string(lives));
+	liveScore->setText("Live: " + std::to_string(lives) + " | Score: " + std::to_string(score));
+}
+
+void GameGameState::setScore(const int aScore)
+{
+	score += aScore;
+	liveScore->setText("Live: " + std::to_string(lives) + " | Score: " + std::to_string(score));
 }
 
 void GameGameState::update(sf::Time elapsed)
@@ -72,4 +87,5 @@ void GameGameState::render()
 
 void GameGameState::exit()
 {
+	music->stop();
 }
