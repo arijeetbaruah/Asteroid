@@ -7,12 +7,14 @@ class Game;
 class Sprite;
 class Player;
 class Text;
+class Music;
 class Asteroid;
 
 class GameGameState : public BaseGameState
 {
 private:
 	Game* game;
+	Music* music;
 
 private:
 	Sprite* backgroundSprite;

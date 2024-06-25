@@ -1,6 +1,7 @@
 #include "../include/MainMenuGameState.h"
 #include "../include/Game.h"
 #include "../include/Text.h"
+#include "../include/Music.hpp"
 #include "../include/Button.h"
 #include "../include/Sprite.h"
 #include "spdlog/spdlog.h"
@@ -11,6 +12,7 @@ MainMenuGameState::MainMenuGameState(Game* mGame): game(mGame)
 	startBtn = new Button(game, "PlayfairDisplay.ttf", "Start");
 	exitBtn = new Button(game, "PlayfairDisplay.ttf", "Quit");
 	backgroundSprite = new Sprite(game, "starBG.jpg");
+	music = new Music("asteroid-110229.mp3");
 }
 
 MainMenuGameState::~MainMenuGameState()
@@ -37,6 +39,8 @@ void MainMenuGameState::enter()
 	exitBtn->setCharacterSize(100);
 	exitBtn->setFillColor(sf::Color::Black);
 	exitBtn->setPosition(game->window.getSize().x / 2, 500);
+
+	music->play();
 }
 
 void MainMenuGameState::handleInput(sf::Event aEvent)
@@ -72,6 +76,7 @@ void MainMenuGameState::render()
 
 void MainMenuGameState::exit()
 {
+	music->stop();
 	startBtn->reset();
 	exitBtn->reset();
 }

@@ -24,6 +24,7 @@ include_directories(
 
 add_executable(AsteroidGame ${HEADERS} ${HEADERS_PP} ${SOURCES})
 target_link_libraries(AsteroidGame PRIVATE sfml-graphics)
+target_link_libraries(AsteroidGame PRIVATE sfml-audio)
 target_link_libraries(AsteroidGame PRIVATE glm::glm)
 target_link_libraries(AsteroidGame PRIVATE spdlog::spdlog)
 target_compile_features(AsteroidGame PRIVATE cxx_std_17)

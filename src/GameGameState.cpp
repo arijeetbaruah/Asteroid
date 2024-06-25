@@ -2,6 +2,7 @@
 #include "../include/Game.h"
 #include "../include/Sprite.h"
 #include "../include/Text.h"
+#include "../include/Music.hpp"
 #include "../include/Player.h"
 #include "../include/Asteroid.h"
 #include "../include/EntityManager.h"
@@ -12,6 +13,8 @@ GameGameState::GameGameState(Game* mGame) : game(mGame), player(0), lives(3)
 	liveScore = new Text(game, "PlayfairDisplay.ttf", "Score: " + std::to_string(lives));
 	liveScore->setPosition(70, 70);
 	liveScore->setFillColor(sf::Color::Red);
+
+	music = new Music("space-ambience-56265.mp3");
 }
 
 GameGameState::~GameGameState()
@@ -33,6 +36,8 @@ void GameGameState::enter()
 	backgroundSprite->setPosition(game->window.getSize().x / 2, game->window.getSize().y / 2);
 	player->setPosition(game->window.getSize().x / 2, game->window.getSize().y / 2);
 	player->setScale(1, 1);
+
+	music->play();
 }
 
 void GameGameState::handleInput(sf::Event aEvent)
@@ -72,4 +77,5 @@ void GameGameState::render()
 
 void GameGameState::exit()
 {
+	music->stop();
 }

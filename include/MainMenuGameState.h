@@ -6,6 +6,7 @@ class Game;
 class Text;
 class Button;
 class Sprite;
+class Music;
 
 class MainMenuGameState : public BaseGameState
 {
@@ -17,6 +18,8 @@ private:
 	Button* startBtn;
 	Button* exitBtn;
 	Sprite* backgroundSprite;
+
+	Music* music;
 
 public:
 	MainMenuGameState(Game* mGame);
