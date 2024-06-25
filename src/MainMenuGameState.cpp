@@ -41,6 +41,10 @@ void MainMenuGameState::enter()
 	exitBtn->setPosition(game->window.getSize().x / 2, 500);
 
 	music->play();
+	if (!music->getLoop())
+	{
+		music->setLoop(true);
+	}
 }
 
 void MainMenuGameState::handleInput(sf::Event aEvent)

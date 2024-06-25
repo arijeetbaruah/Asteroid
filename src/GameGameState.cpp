@@ -38,6 +38,10 @@ void GameGameState::enter()
 	player->setScale(1, 1);
 
 	music->play();
+	if (!music->getLoop())
+	{
+		music->setLoop(true);
+	}
 }
 
 void GameGameState::handleInput(sf::Event aEvent)
