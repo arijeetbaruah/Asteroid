@@ -7,7 +7,7 @@
 #include "../include/Asteroid.h"
 #include "../include/EntityManager.h"
 
-GameGameState::GameGameState(Game* mGame) : game(mGame), player(0), lives(3)
+GameGameState::GameGameState(Game* mGame) : game(mGame), player(0), lives(3), score(0)
 {
 	backgroundSprite = new Sprite(game, "starBG.jpg");
 	liveScore = new Text(game, "PlayfairDisplay.ttf", "Score: " + std::to_string(lives));
@@ -28,7 +28,7 @@ void GameGameState::enter()
 {
 	player = new Player(game);
 	game->getEntityManager()->addEntity(player);
-	liveScore->setText("Score: " + std::to_string(lives));
+	liveScore->setText("Live: " + std::to_string(lives) + " | Score: " + std::to_string(score));
 
 	SpawnAsteroid();
 
@@ -66,7 +66,13 @@ int GameGameState::getLives() const
 void GameGameState::setLives(const int aLives)
 {
 	lives = std::max(aLives, 0);
-	liveScore->setText("Score: " + std::to_string(lives));
+	liveScore->setText("Live: " + std::to_string(lives) + " | Score: " + std::to_string(score));
+}
+
+void GameGameState::setScore(const int aScore)
+{
+	score += aScore;
+	liveScore->setText("Live: " + std::to_string(lives) + " | Score: " + std::to_string(score));
 }
 
 void GameGameState::update(sf::Time elapsed)

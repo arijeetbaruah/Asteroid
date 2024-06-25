@@ -4,6 +4,7 @@
 #include "../include/Bullet.h"
 #include "../include/BulletPool.h"
 #include "../include/Asteroid.h"
+#include "../include/Audio.hpp"
 #include "../include/GameGameState.h"
 #include "../include/Trail.h"
 #include "spdlog/spdlog.h"
@@ -23,6 +24,8 @@ Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(fal
 		std::shared_ptr<Trail> trail = std::make_shared<Trail>(game);
 		trails.push_back(trail);
 	}
+
+	laserAudio = new Audio("laser-gun-81720.mp3");
 }
 
 Player::~Player()
@@ -244,11 +247,16 @@ void Player::Shoot(sf::Time& elapsed)
 		Bullet* bullet = bulletPool->getBullet();
 		bullet->reset();
 		bullet->setActive(true);
-		bullet->setPosition(getPosition());
 		
 		float radian = sprite->getRotation() * (3.14159265f / 180.0f);
 		sf::Vector2f direction = sf::Vector2f(std::sin(radian), -std::cos(radian));
+		sf::Vector2f position = getPosition();
+		position += sf::Vector2f(20 * std::sin(radian), -20 * std::cos(radian));
+		position -= sf::Vector2f(10 * std::cos(radian), -10 * std::sin(radian));
 		bullet->setDirection(direction);
+		bullet->setPosition(position);
+
+		laserAudio->play();
 	}
 }
 

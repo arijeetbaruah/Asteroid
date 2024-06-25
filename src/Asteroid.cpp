@@ -7,6 +7,15 @@
 #include "../include/Game.h"
 #include "../include/GameGameState.h"
 #include "../include/Bullet.h"
+#include "../include/Audio.hpp"
+
+#include "spdlog/spdlog.h"
+
+#if _DEBUG
+#define ASSET_SPRITES "../assets/sounds/"
+#else
+#define ASSET_SPRITES "./assets/sounds/"
+#endif
 
 
 Asteroid::Asteroid(Game* aGame): BaseEntity(aGame), duration(0), animationIndex(0), isHit(false), direction(0), sizeMultipler(0)
@@ -16,6 +25,8 @@ Asteroid::Asteroid(Game* aGame): BaseEntity(aGame), duration(0), animationIndex(
 		sprite.push_back(new Sprite(game, "asteroids" + std::to_string(index) + ".png"));
 		sprite[index]->setScale(3, 3);
 	}
+
+	hitAudio = new Audio("asteroid-hitting-something-152511.mp3");
 }
 
 void Asteroid::initialize(float aSizeMultipler, bool useRandomPosition)
@@ -47,6 +58,11 @@ void Asteroid::setDestroy()
 bool Asteroid::canHit() const
 {
 	return !isHit;
+}
+
+int Asteroid::getScore() const
+{
+	return sizeMultipler;
 }
 
 void Asteroid::setPosition(const sf::Vector2f aPosition)
@@ -186,6 +202,10 @@ void Asteroid::onCollision(BaseEntity* entity)
 		isHit = true;
 		animationIndex++;
 		bullet->setActive(false);
+
+		std::shared_ptr<GameGameState> gameState = std::dynamic_pointer_cast<GameGameState>(game->getCurrentGameState());
+		gameState->setScore(getScore());
+		hitAudio->play();
 	}
 }
 
