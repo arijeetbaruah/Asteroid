@@ -1,5 +1,5 @@
 #pragma once
-#include "./BaseGameState.h"
+#include "./BaseGameState.hpp"
 #include <SFML/Graphics.hpp>
 
 class Game;

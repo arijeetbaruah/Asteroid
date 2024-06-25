@@ -1,6 +1,6 @@
-#include "../include/Button.h"
-#include "../include/Game.h"
-#include "../include/Text.h"
+#include "../include/Button.hpp"
+#include "../include/Game.hpp"
+#include "../include/Text.hpp"
 #include "spdlog/spdlog.h"
 
 Button::Button(Game* aGame, std::string fontFile, std::string aText): game(aGame), text(new Text(game, fontFile, aText)), isClicked(false), isHovered(false)

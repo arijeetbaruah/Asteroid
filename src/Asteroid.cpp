@@ -1,12 +1,12 @@
-#include "../include/Asteroid.h"
+#include "../include/Asteroid.hpp"
 
 #include <random>
 #include <memory>
 
-#include "../include/Sprite.h"
-#include "../include/Game.h"
-#include "../include/GameGameState.h"
-#include "../include/Bullet.h"
+#include "../include/Sprite.hpp"
+#include "../include/Game.hpp"
+#include "../include/GameGameState.hpp"
+#include "../include/Bullet.hpp"
 #include "../include/Audio.hpp"
 
 #include "spdlog/spdlog.h"

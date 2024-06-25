@@ -1,6 +1,6 @@
-#include "../include/GameStateMachine.h"
-#include "../include/MainMenuGameState.h"
-#include "../include/Game.h"
+#include "../include/GameStateMachine.hpp"
+#include "../include/MainMenuGameState.hpp"
+#include "../include/Game.hpp"
 #include "spdlog/spdlog.h"
 
 GameStateMachine::GameStateMachine(Game* mGame) : game(mGame)

@@ -1,11 +1,11 @@
-#include "../include/GameGameState.h"
-#include "../include/Game.h"
-#include "../include/Sprite.h"
-#include "../include/Text.h"
+#include "../include/GameGameState.hpp"
+#include "../include/Game.hpp"
+#include "../include/Sprite.hpp"
+#include "../include/Text.hpp"
 #include "../include/Music.hpp"
-#include "../include/Player.h"
-#include "../include/Asteroid.h"
-#include "../include/EntityManager.h"
+#include "../include/Player.hpp"
+#include "../include/Asteroid.hpp"
+#include "../include/EntityManager.hpp"
 
 GameGameState::GameGameState(Game* mGame) : game(mGame), player(0), lives(3), score(0)
 {

@@ -1,6 +1,6 @@
-#include "../include/EntityManager.h"
-#include "../include/Game.h"
-#include "../include/BaseEntity.h"
+#include "../include/EntityManager.hpp"
+#include "../include/Game.hpp"
+#include "../include/BaseEntity.hpp"
 
 EntityManager::EntityManager(Game* aGame) : game(aGame)
 {

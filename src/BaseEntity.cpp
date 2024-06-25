@@ -1,5 +1,5 @@
-#include "../include/BaseEntity.h"
-#include "../include/Game.h"
+#include "../include/BaseEntity.hpp"
+#include "../include/Game.hpp"
 
 BaseEntity::BaseEntity(Game* aGame): game(aGame), active(true)
 {
