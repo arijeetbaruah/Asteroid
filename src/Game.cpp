@@ -3,8 +3,10 @@
 #include "../include/GameStateMachine.hpp"
 #include "../include/GameOverGameState.hpp"
 #include "../include/MainMenuGameState.hpp"
+#include "../include/SettingsGameState.hpp"
 #include "../include/EntityManager.hpp"
 #include "../include/GameGameState.hpp"
+#include "../include/FileReadWrite.hpp"
 
 Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
 	window(sf::VideoMode(aWindowSize.x, aWindowSize.y), name),
@@ -12,12 +14,20 @@ Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
 	mainMenuState(std::make_shared<MainMenuGameState>(this)),
     gameGameState(std::make_shared<GameGameState>(this)),
     gameOverGameState(std::make_shared<GameOverGameState>(this)),
+    settingsGameState(std::make_shared<SettingsGameState>(this)),
+    fileReadWrite(std::make_shared<FileReadWrite>()),
     entityManager(std::make_shared<EntityManager>(this)),
 	windowSize(aWindowSize)
 {
 	window.setFramerateLimit(144);
 
 	setState(mainMenuState);
+
+    if (!fileReadWrite->ReadSettings(settingData))
+    {
+        settingData = DefaultData;
+        fileReadWrite->SaveSettings(settingData);
+    }
 }
 
 void Game::run()
@@ -40,6 +50,11 @@ void Game::gotoMainMenu()
     setState(mainMenuState);
 }
 
+void Game::gotoSettings()
+{
+    setState(settingsGameState);
+}
+
 void Game::setState(std::shared_ptr<BaseGameState> state)
 {
     entityManager->clearEntities();
@@ -54,6 +69,11 @@ std::shared_ptr<EntityManager> Game::getEntityManager() const
 std::shared_ptr<BaseGameState> Game::getCurrentGameState() const
 {
     return stateMachine->getCurrentState();
+}
+
+std::shared_ptr<FileReadWrite> Game::getFileReadWrite() const
+{
+    return fileReadWrite;
 }
 
 void Game::StartGame()

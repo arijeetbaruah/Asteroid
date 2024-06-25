@@ -10,6 +10,7 @@ MainMenuGameState::MainMenuGameState(Game* mGame): game(mGame)
 {
 	mainMenuText = new Text(game, "PlayfairDisplay.ttf", "Asteroid");
 	startBtn = new Button(game, "PlayfairDisplay.ttf", "Start");
+	settingsBtn = new Button(game, "PlayfairDisplay.ttf", "Settings");
 	exitBtn = new Button(game, "PlayfairDisplay.ttf", "Quit");
 	backgroundSprite = new Sprite(game, "starBG.jpg");
 	music = new Music("asteroid-110229.mp3");
@@ -36,9 +37,13 @@ void MainMenuGameState::enter()
 	startBtn->setFillColor(sf::Color::Black);
 	startBtn->setPosition(game->window.getSize().x / 2, 300);
 
+	settingsBtn->setCharacterSize(100);
+	settingsBtn->setFillColor(sf::Color::Black);
+	settingsBtn->setPosition(game->window.getSize().x / 2, 500);
+
 	exitBtn->setCharacterSize(100);
 	exitBtn->setFillColor(sf::Color::Black);
-	exitBtn->setPosition(game->window.getSize().x / 2, 500);
+	exitBtn->setPosition(game->window.getSize().x / 2, 700);
 
 	music->play();
 	if (!music->getLoop())
@@ -50,23 +55,34 @@ void MainMenuGameState::enter()
 void MainMenuGameState::handleInput(sf::Event aEvent)
 {
 	startBtn->handleInput(aEvent);
+	settingsBtn->handleInput(aEvent);
 	exitBtn->handleInput(aEvent);
 }
 
 void MainMenuGameState::update(sf::Time elapsed)
 {
 	startBtn->update(elapsed);
+	settingsBtn->update(elapsed);
 	exitBtn->update(elapsed);
 
 	if (startBtn->IsClicked())
 	{
 		spdlog::info("Game Start!!");
+		music->stop();
 		game->StartGame();
+		return;
+	}
+
+	if (settingsBtn->IsClicked())
+	{
+		game->gotoSettings();
+		return;
 	}
 
 	if (exitBtn->IsClicked())
 	{
 		game->window.close();
+		return;
 	}
 }
 
@@ -75,12 +91,13 @@ void MainMenuGameState::render()
 	backgroundSprite->render();
 	mainMenuText->render();
 	startBtn->render();
+	settingsBtn->render();
 	exitBtn->render();
 }
 
 void MainMenuGameState::exit()
 {
-	music->stop();
 	startBtn->reset();
+	settingsBtn->reset();
 	exitBtn->reset();
 }

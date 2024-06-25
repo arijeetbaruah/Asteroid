@@ -16,6 +16,7 @@ private:
 private:
 	Text* mainMenuText;
 	Button* startBtn;
+	Button* settingsBtn;
 	Button* exitBtn;
 	Sprite* backgroundSprite;
 
