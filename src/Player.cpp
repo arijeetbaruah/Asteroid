@@ -14,8 +14,8 @@
 
 Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(false), shootCooldownAmount(1), shootCooldown(0), trailCooldown(0)
 {
-	sprite = new Sprite(game, "player.png");
-	bulletPool = new BulletPool(game, 10, sf::Color::Red, false);
+	sprite = std::make_shared<Sprite>(game, "player.png");
+	bulletPool = std::make_shared<BulletPool>(game, 10, sf::Color::Red, false);
 	sf::Vector2u pos = game->window.getSize();
 	setPosition(pos.x / 2.0f, pos.y / 2.0f);
 
@@ -25,12 +25,7 @@ Player::Player(Game* mGame) : BaseEntity(mGame), isMoving(false), isRotating(fal
 		trails.push_back(trail);
 	}
 
-	laserAudio = new Audio("laser-gun-81720.mp3");
-}
-
-Player::~Player()
-{
-	delete sprite;
+	laserAudio = std::make_shared<Audio>("laser-gun-81720.mp3");
 }
 
 sf::Vector2f Player::getForwardVector() const
@@ -244,7 +239,7 @@ void Player::Shoot(sf::Time& elapsed)
 	if (shootCooldown <= 0)
 	{
 		shootCooldown = shootCooldownAmount;
-		Bullet* bullet = bulletPool->getBullet();
+		std::shared_ptr<Bullet> bullet = bulletPool->getBullet();
 		bullet->reset();
 		bullet->setActive(true);
 		
@@ -260,9 +255,9 @@ void Player::Shoot(sf::Time& elapsed)
 	}
 }
 
-void Player::onCollision(BaseEntity* entity)
+void Player::onCollision(std::shared_ptr<BaseEntity> entity)
 {
-	Asteroid* asteroid = dynamic_cast<Asteroid*>(entity);
+	std::shared_ptr<Asteroid> asteroid = std::dynamic_pointer_cast<Asteroid>(entity);
 	if (asteroid != nullptr && asteroid->canHit())
 	{
 		spdlog::info("collision");

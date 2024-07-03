@@ -92,7 +92,7 @@ void Bullet::wrapPlayer()
 	setPosition(position);
 }
 
-void Bullet::onCollision(BaseEntity* entity)
+void Bullet::onCollision(std::shared_ptr<BaseEntity> entity)
 {
 }
 

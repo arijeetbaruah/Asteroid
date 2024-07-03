@@ -12,9 +12,8 @@ class BulletPool;
 class Player : public BaseEntity
 {
 private:
-	Sprite* sprite;
-
-	BulletPool* bulletPool;
+	std::shared_ptr<Sprite> sprite;
+	std::shared_ptr<BulletPool> bulletPool;
 
 	sf::Vector2f movementDirection;
 
@@ -26,11 +25,10 @@ private:
 
 	std::vector<std::shared_ptr<Trail>> trails;
 	float trailCooldown;
-	Audio* laserAudio;
+	std::shared_ptr<Audio> laserAudio;
 
 public:
 	Player(Game* mGame);
-	~Player();
 
 	sf::Vector2f getForwardVector() const;
 
@@ -54,7 +52,7 @@ public:
 	// Inherited via BaseEntity
 	void render() override;
 	void update(sf::Time& elapsed) override;
-	void onCollision(BaseEntity* entity) override;
+	void onCollision(std::shared_ptr<BaseEntity> entity) override;
 	sf::FloatRect getBounds() override;
 
 private:

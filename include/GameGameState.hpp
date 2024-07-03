@@ -1,10 +1,10 @@
 #pragma once
 
 #include "./BaseGameState.hpp"
+#include "./Sprite.hpp"
 #include <vector>
 
 class Game;
-class Sprite;
 class Player;
 class Text;
 class Music;
@@ -14,21 +14,20 @@ class GameGameState : public BaseGameState
 {
 private:
 	Game* game;
-	Music* music;
+	std::shared_ptr<Music> music;
 
 private:
-	Sprite* backgroundSprite;
-	Player* player;
-	Text* liveScore;
+	std::shared_ptr<Sprite> backgroundSprite;
+	std::shared_ptr<Player> player;
+	std::shared_ptr<Text> liveScore;
 
 	int lives;
 	int score;
 
-	std::vector<Asteroid*> asteroids;
+	std::vector<std::shared_ptr<Asteroid>> asteroids;
 
 public:
 	GameGameState(Game* mGame);
-	~GameGameState();
 
 	// Inherited via BaseGameState
 	void enter() override;
@@ -38,7 +37,7 @@ public:
 	void exit() override;
 
 public:
-	Asteroid* SpawnAsteroid(float aSizeMultipler = 3, bool useRandomPosition = true);
+	std::shared_ptr<Asteroid> SpawnAsteroid(float aSizeMultipler = 3, bool useRandomPosition = true);
 	int getLives() const;
 	void setLives(const int aLives);
 

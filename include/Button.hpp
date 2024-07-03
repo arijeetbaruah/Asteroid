@@ -9,7 +9,7 @@ class Button
 private:
 	Game* game;
 
-	Text* text;
+	std::shared_ptr<Text> text;
 	sf::RectangleShape buttonShape;
 
 	sf::Sprite normal;

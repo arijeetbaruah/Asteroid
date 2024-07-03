@@ -9,12 +9,12 @@ class EntityManager
 private:
 	Game* game;
 
-	std::vector<BaseEntity*> registry;
+	std::vector<std::shared_ptr<BaseEntity>> registry;
 
 public:
 	EntityManager(Game* aGame);
 
-	void addEntity(BaseEntity* entity);
+	void addEntity(std::shared_ptr<BaseEntity> entity);
 	void clearEntities();
 
 	void update(sf::Time& elapsed);

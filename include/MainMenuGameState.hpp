@@ -14,16 +14,16 @@ private:
 	Game* game;
 
 private:
-	Text* mainMenuText;
-	Button* startBtn;
-	Button* exitBtn;
-	Sprite* backgroundSprite;
+	std::shared_ptr<Text> mainMenuText;
+	std::shared_ptr<Button> startBtn;
+	std::shared_ptr<Button> settingsBtn;
+	std::shared_ptr<Button> exitBtn;
+	std::shared_ptr<Sprite> backgroundSprite;
 
-	Music* music;
+	std::shared_ptr<Music> music;
 
 public:
 	MainMenuGameState(Game* mGame);
-	~MainMenuGameState();
 
 	void enter() override;
 

@@ -9,24 +9,17 @@
 
 GameGameState::GameGameState(Game* mGame) : game(mGame), player(0), lives(3), score(0)
 {
-	backgroundSprite = new Sprite(game, "starBG.jpg");
-	liveScore = new Text(game, "PlayfairDisplay.ttf", "Score: " + std::to_string(lives));
+	backgroundSprite = std::make_shared<Sprite>(game, "starBG.jpg");
+	liveScore = std::make_shared<Text>(game, "PlayfairDisplay.ttf", "Score: " + std::to_string(lives));
 	liveScore->setPosition(70, 70);
 	liveScore->setFillColor(sf::Color::Red);
 
-	music = new Music("space-ambience-56265.mp3");
-}
-
-GameGameState::~GameGameState()
-{
-	delete backgroundSprite;
-	delete player;
-	delete liveScore;
+	music = std::make_shared<Music>("space-ambience-56265.mp3");
 }
 
 void GameGameState::enter()
 {
-	player = new Player(game);
+	player = std::make_shared<Player>(game);
 	game->getEntityManager()->addEntity(player);
 	liveScore->setText("Live: " + std::to_string(lives) + " | Score: " + std::to_string(score));
 
@@ -48,9 +41,9 @@ void GameGameState::handleInput(sf::Event aEvent)
 {
 }
 
-Asteroid* GameGameState::SpawnAsteroid(float aSizeMultipler, bool useRandomPosition)
+std::shared_ptr<Asteroid> GameGameState::SpawnAsteroid(float aSizeMultipler, bool useRandomPosition)
 {
-	Asteroid* _asteroid = new Asteroid(game);
+	std::shared_ptr<Asteroid> _asteroid = std::make_shared<Asteroid>(game);
 	_asteroid->initialize(aSizeMultipler, useRandomPosition);
 	asteroids.push_back(_asteroid);
 	game->getEntityManager()->addEntity(_asteroid);

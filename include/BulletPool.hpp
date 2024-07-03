@@ -10,9 +10,9 @@ class BulletPool
 {
 public:
 	BulletPool(Game* aGame, size_t aSize, sf::Color aColor, bool aHitPlayer);
-	Bullet* getBullet();
+	std::shared_ptr<Bullet> getBullet();
 
 private:
-	std::vector<Bullet*> bullets;
+	std::vector<std::shared_ptr<Bullet>> bullets;
 };
 
