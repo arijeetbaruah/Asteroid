@@ -22,11 +22,11 @@ Asteroid::Asteroid(Game* aGame): BaseEntity(aGame), duration(0), animationIndex(
 {
 	for (size_t index = 0; index < 3; index++)
 	{
-		sprite.push_back(new Sprite(game, "asteroids" + std::to_string(index) + ".png"));
+		sprite.push_back(std::make_shared<Sprite>(game, "asteroids" + std::to_string(index) + ".png"));
 		sprite[index]->setScale(3, 3);
 	}
 
-	hitAudio = new Audio("asteroid-hitting-something-152511.mp3");
+	hitAudio = std::make_shared<Audio>("asteroid-hitting-something-152511.mp3");
 }
 
 void Asteroid::initialize(float aSizeMultipler, bool useRandomPosition)
@@ -150,9 +150,9 @@ void Asteroid::updateDestroy(sf::Time& elapsed)
 			{
 				//initialize(sizeMultipler - 1, false);
 				std::shared_ptr<GameGameState> state = std::dynamic_pointer_cast<GameGameState>(game->getCurrentGameState());
-				Asteroid* asteroid1 = state->SpawnAsteroid(sizeMultipler - 1, false);
+				std::shared_ptr<Asteroid> asteroid1 = state->SpawnAsteroid(sizeMultipler - 1, false);
 				asteroid1->setPosition(getPosition());
-				Asteroid* asteroid2 = state->SpawnAsteroid(sizeMultipler - 1, false);
+				std::shared_ptr<Asteroid> asteroid2 = state->SpawnAsteroid(sizeMultipler - 1, false);
 				asteroid2->setPosition(getPosition());
 			}
 			setActive(false);
@@ -194,9 +194,9 @@ void Asteroid::render()
 	sprite[animationIndex]->render();
 }
 
-void Asteroid::onCollision(BaseEntity* entity)
+void Asteroid::onCollision(std::shared_ptr<BaseEntity> entity)
 {
-	Bullet* bullet = dynamic_cast<Bullet*>(entity);
+	std::shared_ptr<Bullet> bullet = std::dynamic_pointer_cast<Bullet>(entity);
 	if (bullet != nullptr && bullet->isActive() && !bullet->canHitPlayer())
 	{
 		isHit = true;

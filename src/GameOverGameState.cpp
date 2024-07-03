@@ -5,10 +5,10 @@
 
 GameOverGameState::GameOverGameState(Game* aGame): game(aGame)
 {
-	gameOverTxt = new Text(game, "PlayfairDisplay.ttf", "Game Over!!");
+	gameOverTxt = std::make_shared<Text>(game, "PlayfairDisplay.ttf", "Game Over!!");
 	gameOverTxt->setFillColor(sf::Color::Red);
 
-	gameOverBtn = new Button(game, "PlayfairDisplay.ttf", "return");
+	gameOverBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "return");
 }
 
 void GameOverGameState::enter()

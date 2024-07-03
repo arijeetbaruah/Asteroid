@@ -15,7 +15,7 @@ bool BaseEntity::isActive()
 	return active;
 }
 
-void BaseEntity::calculateCollision(BaseEntity* entity)
+void BaseEntity::calculateCollision(std::shared_ptr<BaseEntity> entity)
 {
 	if (getBounds().intersects(entity->getBounds()))
 	{

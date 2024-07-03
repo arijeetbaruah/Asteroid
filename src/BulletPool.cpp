@@ -7,13 +7,13 @@ BulletPool::BulletPool(Game* aGame, size_t aSize, sf::Color aColor, bool aHitPla
     // Initialize bullets in the pool
     for (size_t index = 0; index < aSize; index++)
     {
-        Bullet* bullet = new Bullet(aGame, aColor, aHitPlayer);
+        std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(aGame, aColor, aHitPlayer);
         bullets.push_back(bullet);
         aGame->getEntityManager()->addEntity(bullet);
     }
 }
 
-Bullet* BulletPool::getBullet() {
+std::shared_ptr<Bullet> BulletPool::getBullet() {
     for (auto bullet : bullets) {
         if (!bullet->isActive()) {
             return bullet;

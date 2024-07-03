@@ -26,7 +26,7 @@ public:
 	// Inherited via BaseEntity
 	void render() override;
 	void update(sf::Time& elapsed) override;
-	void onCollision(BaseEntity* entity) override;
+	void onCollision(std::shared_ptr<BaseEntity> entity) override;
 	sf::FloatRect getBounds() override;
 
 private:

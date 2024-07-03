@@ -8,19 +8,12 @@
 
 MainMenuGameState::MainMenuGameState(Game* mGame): game(mGame)
 {
-	mainMenuText = new Text(game, "PlayfairDisplay.ttf", "Asteroid");
-	startBtn = new Button(game, "PlayfairDisplay.ttf", "Start");
-	settingsBtn = new Button(game, "PlayfairDisplay.ttf", "Settings");
-	exitBtn = new Button(game, "PlayfairDisplay.ttf", "Quit");
-	backgroundSprite = new Sprite(game, "starBG.jpg");
-	music = new Music("asteroid-110229.mp3");
-}
-
-MainMenuGameState::~MainMenuGameState()
-{
-	delete mainMenuText;
-	delete startBtn;
-	delete exitBtn;
+	mainMenuText = std::make_shared<Text>(game, "PlayfairDisplay.ttf", "Asteroid");
+	startBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Start");
+	settingsBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Settings");
+	exitBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Quit");
+	backgroundSprite = std::make_shared<Sprite>(game, "starBG.jpg");
+	music = std::make_shared<Music>("asteroid-110229.mp3");
 }
 
 void MainMenuGameState::enter()

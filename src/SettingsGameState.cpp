@@ -1,10 +1,9 @@
 #include "../include/SettingsGameState.hpp"
-#include "../include/Button.hpp"
 #include "../include/Game.hpp"
 
 SettingsGameState::SettingsGameState(Game* mGame) : game(mGame)
 {
-	returnBtn = new Button(game, "PlayfairDisplay.ttf", "Return");
+	returnBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Return");
 }
 
 void SettingsGameState::enter()

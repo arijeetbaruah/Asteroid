@@ -1,16 +1,16 @@
 #pragma once
 
 #include "./BaseGameState.hpp"
+#include "./Button.hpp"
 
 class Game;
-class Button;
 
 class SettingsGameState : public BaseGameState
 {
 private:
 	Game* game;
 
-	Button* returnBtn;
+	std::shared_ptr<Button> returnBtn;
 
 public:
 	SettingsGameState(Game* mGame);

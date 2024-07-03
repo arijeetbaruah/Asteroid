@@ -3,7 +3,7 @@
 #include "../include/Text.hpp"
 #include "spdlog/spdlog.h"
 
-Button::Button(Game* aGame, std::string fontFile, std::string aText): game(aGame), text(new Text(game, fontFile, aText)), isClicked(false), isHovered(false)
+Button::Button(Game* aGame, std::string fontFile, std::string aText): game(aGame), text(std::make_shared<Text>(game, fontFile, aText)), isClicked(false), isHovered(false)
 {
 	buttonShape.setFillColor(sf::Color::White);
     text->setFillColor(sf::Color::Black);

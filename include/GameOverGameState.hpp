@@ -12,8 +12,8 @@ private:
 	Game* game;
 
 private:
-	Text* gameOverTxt;
-	Button* gameOverBtn;
+	std::shared_ptr<Text> gameOverTxt;
+	std::shared_ptr<Button> gameOverBtn;
 
 public:
 	GameOverGameState(Game* aGame);

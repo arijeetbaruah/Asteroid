@@ -11,7 +11,7 @@ class Audio;
 class Asteroid : public BaseEntity
 {
 private:
-	std::vector<Sprite*> sprite;
+	std::vector<std::shared_ptr<Sprite>> sprite;
 	float duration;
 	float sizeMultipler;
 
@@ -20,7 +20,7 @@ private:
 	bool isHit;
 	float direction;
 
-	Audio* hitAudio;
+	std::shared_ptr<Audio> hitAudio;
 
 public:
 	Asteroid(Game* aGame);
@@ -39,7 +39,7 @@ public:
 	void update(sf::Time& elapsed) override;
 	void Move(sf::Time& elapsed);
 	void render() override;
-	void onCollision(BaseEntity* entity) override;
+	void onCollision(std::shared_ptr<BaseEntity> entity) override;
 	sf::FloatRect getBounds() override;
 
 private:

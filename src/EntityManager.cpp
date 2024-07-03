@@ -6,7 +6,7 @@ EntityManager::EntityManager(Game* aGame) : game(aGame)
 {
 }
 
-void EntityManager::addEntity(BaseEntity* entity)
+void EntityManager::addEntity(std::shared_ptr<BaseEntity> entity)
 {
 	registry.push_back(entity);
 }
