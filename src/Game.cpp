@@ -23,11 +23,11 @@ Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
 
 	setState(mainMenuState);
 
-    if (!fileReadWrite->ReadSettings(settingData))
-    {
-        settingData = DefaultData;
-        fileReadWrite->SaveSettings(settingData);
-    }
+    //if (!fileReadWrite->ReadSettings(settingData))
+    //{
+    //    settingData = DefaultData;
+    //    fileReadWrite->SaveSettings(settingData);
+    //}
 }
 
 void Game::run()
