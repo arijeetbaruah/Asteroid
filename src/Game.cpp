@@ -8,13 +8,17 @@
 #include "../include/GameGameState.hpp"
 #include "../include/FileReadWrite.hpp"
 
+#include "boost/json.hpp"
+
+#include "spdlog/spdlog.h"
+
 Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
 	window(sf::VideoMode(aWindowSize.x, aWindowSize.y), name),
 	stateMachine(std::make_shared<GameStateMachine>(this)),
 	mainMenuState(std::make_shared<MainMenuGameState>(this)),
     gameGameState(std::make_shared<GameGameState>(this)),
-    gameOverGameState(std::make_shared<GameOverGameState>(this)),
     settingsGameState(std::make_shared<SettingsGameState>(this)),
+    gameOverGameState(std::make_shared<GameOverGameState>(this)),
     fileReadWrite(std::make_shared<FileReadWrite>()),
     entityManager(std::make_shared<EntityManager>(this)),
 	windowSize(aWindowSize)
@@ -23,11 +27,15 @@ Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
 
 	setState(mainMenuState);
 
-    //if (!fileReadWrite->ReadSettings(settingData))
-    //{
-    //    settingData = DefaultData;
-    //    fileReadWrite->SaveSettings(settingData);
-    //}
+    if (fileReadWrite->exists(settingsSaveFile))
+    {
+        std::string data = fileReadWrite->readFile(settingsSaveFile);
+    }
+    else
+    {
+        fileReadWrite->createFile(settingsSaveFile, "hi");
+        spdlog::error("file not found");
+    }
 }
 
 void Game::run()

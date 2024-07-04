@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "./SettingData.hpp"
 
 #include <vector>
+#include "./SettingsData.hpp"
 
 class BaseGameState;
 class GameStateMachine;
@@ -24,7 +24,7 @@ private:
 
 public:
     sf::RenderWindow window;
-    SettingData settingData;
+    SettingsData settingsData;
 
 private:
     std::shared_ptr<MainMenuGameState> mainMenuState;
