@@ -12,6 +12,12 @@ FetchContent_Declare(GLM
     GIT_REPOSITORY https://github.com/g-truc/glm.git)
 FetchContent_MakeAvailable(SFML GLM)
 
+# Set Boost root directory
+set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/plugins/boost_1_85_0/build)
+
+# Find Boost components
+find_package(Boost REQUIRED COMPONENTS filesystem json system)
+
 add_subdirectory(plugins/spdlog)
 
 file(GLOB_RECURSE HEADERS "include/*.h")
@@ -27,6 +33,7 @@ target_link_libraries(AsteroidGame PRIVATE sfml-graphics)
 target_link_libraries(AsteroidGame PRIVATE sfml-audio)
 target_link_libraries(AsteroidGame PRIVATE glm::glm)
 target_link_libraries(AsteroidGame PRIVATE spdlog::spdlog)
+target_link_libraries(AsteroidGame PRIVATE ${Boost_LIBRARIES})
 target_compile_features(AsteroidGame PRIVATE cxx_std_17)
 
 if(WIN32)

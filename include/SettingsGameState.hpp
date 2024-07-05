@@ -1,16 +1,34 @@
 #pragma once
 
 #include "./BaseGameState.hpp"
-#include "./Button.hpp"
+#include "./SettingsData.hpp"
+#include <SFML/Graphics.hpp>
 
 class Game;
+class Button;
+class Text;
+
+enum SliderDirection
+{
+	NONE,
+	LEFT,
+	RIGHT
+};
 
 class SettingsGameState : public BaseGameState
 {
 private:
 	Game* game;
 
-	std::shared_ptr<Button> returnBtn;
+private:
+	std::shared_ptr<Text> masterVolumn;
+	std::shared_ptr<Text> musicVolumn;
+	std::shared_ptr<Button> applyBtn;
+
+	int selectedOptions;
+
+	SettingsData settings;
+	SliderDirection sliderDirection;
 
 public:
 	SettingsGameState(Game* mGame);
@@ -21,4 +39,8 @@ public:
 	void update(sf::Time elapsed) override;
 	void render() override;
 	void exit() override;
+
+private:
+	void updateUI();
+	void updateVolume();
 };
