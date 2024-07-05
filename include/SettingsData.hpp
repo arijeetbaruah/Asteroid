@@ -1,7 +1,9 @@
-const std::string settingsSaveFile = "../save/settings.dat";
+#pragma once
+
+const std::string settingsSaveFile = "../save/settings.bin";
 
 struct SettingsData
 {
-	float masterVolume = 100;
-	float musicVolume = 100;
+    float masterVolume = 100;
+    float musicVolume = 100;
 };

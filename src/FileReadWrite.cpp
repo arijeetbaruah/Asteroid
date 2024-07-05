@@ -25,7 +25,7 @@ bool FileReadWrite::createDirectory(const std::string& dir) {
 bool FileReadWrite::createFile(const std::string& file, const std::string& content) {
     fs::path filePath = file;
     try {
-        boost::filesystem::ofstream ofs(filePath);
+        boost::filesystem::ofstream ofs(filePath, std::ios::binary);
         if (!ofs) {
             spdlog::error("Error creating file {}", file);
             return false;
@@ -43,7 +43,7 @@ bool FileReadWrite::createFile(const std::string& file, const std::string& conte
 std::string FileReadWrite::readFile(const std::string& file) {
     fs::path filePath = file;
     try {
-        boost::filesystem::ifstream ifs(filePath);
+        boost::filesystem::ifstream ifs(filePath, std::ios::binary);
         if (!ifs) {
             spdlog::error("Error opening file for reading {}", file);
             return "";

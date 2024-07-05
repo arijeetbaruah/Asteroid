@@ -4,7 +4,15 @@
 #include <SFML/Graphics.hpp>
 
 class Game;
+class Button;
 class Text;
+
+enum SliderDirection
+{
+	NONE,
+	LEFT,
+	RIGHT
+};
 
 class SettingsGameState : public BaseGameState
 {
@@ -14,8 +22,13 @@ private:
 private:
 	std::shared_ptr<Text> masterVolumn;
 	std::shared_ptr<Text> musicVolumn;
+	std::shared_ptr<Button> applyBtn;
 
 	int selectedOptions;
+
+	float masterVolumnValue;
+	float musicVolumnValue;
+	SliderDirection sliderDirection;
 
 public:
 	SettingsGameState(Game* mGame);
@@ -29,4 +42,5 @@ public:
 
 private:
 	void updateUI();
+	void updateVolume();
 };

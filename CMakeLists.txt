@@ -16,7 +16,7 @@ FetchContent_MakeAvailable(SFML GLM)
 set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/plugins/boost_1_85_0/build)
 
 # Find Boost components
-find_package(Boost REQUIRED COMPONENTS filesystem system)
+find_package(Boost REQUIRED COMPONENTS filesystem json system)
 
 add_subdirectory(plugins/spdlog)
 

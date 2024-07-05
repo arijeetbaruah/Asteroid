@@ -4,3 +4,8 @@ out
 .idea
 .vs
 .vscode
+save/*
+plugins/boost_1_85_0/b2.exe
+plugins/boost_1_85_0/bin.v2/
+plugins/boost_1_85_0/project-config.jam
+plugins/boost_1_85_0/stage/
