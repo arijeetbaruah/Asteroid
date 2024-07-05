@@ -35,6 +35,7 @@ void GameGameState::enter()
 	{
 		music->setLoop(true);
 	}
+	music->setVolume(game->settingsData.getMusicVolumeNormalize());
 }
 
 void GameGameState::handleInput(sf::Event aEvent)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "./BaseGameState.hpp"
+#include "./SettingsData.hpp"
 #include <SFML/Graphics.hpp>
 
 class Game;
@@ -26,8 +27,7 @@ private:
 
 	int selectedOptions;
 
-	float masterVolumnValue;
-	float musicVolumnValue;
+	SettingsData settings;
 	SliderDirection sliderDirection;
 
 public:

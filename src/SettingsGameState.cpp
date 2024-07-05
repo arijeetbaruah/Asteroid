@@ -16,20 +16,20 @@ void SettingsGameState::enter()
 {
 	selectedOptions = 0;
 	sliderDirection = SliderDirection::NONE;
-	masterVolumnValue = game->settingsData.masterVolume;
-	musicVolumnValue = game->settingsData.musicVolume;
+	settings.masterVolume = game->settingsData.masterVolume;
+	settings.masterVolume = game->settingsData.musicVolume;
 
 	masterVolumn->setFillColor(sf::Color::White);
 	masterVolumn->setCharacterSize(50);
 	masterVolumn->setStyle(sf::Text::Bold);
 	masterVolumn->setPosition(game->window.getSize().x / 2, 100);
-	masterVolumn->setText("Master Volume " + std::to_string((int)masterVolumnValue));
+	masterVolumn->setText("Master Volume " + std::to_string((int)settings.masterVolume));
 
 	musicVolumn->setFillColor(sf::Color::Red);
 	musicVolumn->setCharacterSize(50);
 	musicVolumn->setStyle(sf::Text::Bold);
 	musicVolumn->setPosition(game->window.getSize().x / 2, 300);
-	musicVolumn->setText("Music Volume " + std::to_string((int)musicVolumnValue));
+	musicVolumn->setText("Music Volume " + std::to_string((int)settings.masterVolume));
 
 	applyBtn->setCharacterSize(50);
 	applyBtn->setStyle(sf::Text::Bold);
@@ -81,10 +81,9 @@ void SettingsGameState::update(sf::Time elapsed)
 
 	if (applyBtn->IsClicked())
 	{
-		game->settingsData.masterVolume = masterVolumnValue;
-		game->settingsData.musicVolume = musicVolumnValue;
+		game->settingsData = settings;
 
-		std::string settingsData = std::to_string(masterVolumnValue) + "," + std::to_string((int)musicVolumnValue);
+		std::string settingsData = std::to_string(settings.masterVolume) + "," + std::to_string((int)settings.musicVolume);
 		game->getFileReadWrite()->createFile(settingsSaveFile, settingsData);
 	}
 }
@@ -122,14 +121,14 @@ void SettingsGameState::updateVolume()
 		switch (sliderDirection)
 		{
 		case SliderDirection::LEFT:
-			masterVolumnValue -= 1;
-			masterVolumnValue = masterVolumnValue < 0 ? 0 : masterVolumnValue;
-			masterVolumn->setText("Master Volume " + std::to_string((int)masterVolumnValue));
+			settings.masterVolume -= 1;
+			settings.masterVolume = settings.masterVolume < 0 ? 0 : settings.masterVolume;
+			masterVolumn->setText("Master Volume " + std::to_string((int)settings.masterVolume));
 			break;
 		case SliderDirection::RIGHT:
-			masterVolumnValue += 1;
-			masterVolumnValue = masterVolumnValue > 100 ? 100 : masterVolumnValue;
-			masterVolumn->setText("Master Volume " + std::to_string((int)masterVolumnValue));
+			settings.masterVolume += 1;
+			settings.masterVolume = settings.masterVolume > 100 ? 100 : settings.masterVolume;
+			masterVolumn->setText("Master Volume " + std::to_string((int)settings.masterVolume));
 			break;
 		}
 	}
@@ -140,14 +139,14 @@ void SettingsGameState::updateVolume()
 			switch (sliderDirection)
 			{
 			case SliderDirection::LEFT:
-				musicVolumnValue -= 1;
-				musicVolumnValue = musicVolumnValue < 0 ? 0 : musicVolumnValue;
-				musicVolumn->setText("Music Volume " + std::to_string((int)musicVolumnValue));
+				settings.musicVolume -= 1;
+				settings.musicVolume = settings.musicVolume < 0 ? 0 : settings.musicVolume;
+				musicVolumn->setText("Music Volume " + std::to_string((int)settings.musicVolume));
 				break;
 			case SliderDirection::RIGHT:
-				musicVolumnValue += 1;
-				musicVolumnValue = musicVolumnValue > 100 ? 100 : musicVolumnValue;
-				musicVolumn->setText("Music Volume " + std::to_string((int)musicVolumnValue));
+				settings.musicVolume += 1;
+				settings.musicVolume = settings.musicVolume > 100 ? 100 : settings.musicVolume;
+				musicVolumn->setText("Music Volume " + std::to_string((int)settings.musicVolume));
 				break;
 			}
 		}
