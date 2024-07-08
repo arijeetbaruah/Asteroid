@@ -48,13 +48,12 @@ Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
 
     if (fileReadWrite->exists(settingsSaveFile))
     {
-        std::vector<std::string> data = split(fileReadWrite->readFile(settingsSaveFile), ",");
-        settingsData.masterVolume = std::stof(data[0]);
-        settingsData.musicVolume = std::stof(data[1]);
+        std::string yamlStr = fileReadWrite->readFile(settingsSaveFile);
+        settingsData = SettingsData::fromYAML(yamlStr);
     }
     else
     {
-        fileReadWrite->createFile(settingsSaveFile, "100,100");
+        fileReadWrite->createFile(settingsSaveFile, settingsData.toYAML());
         spdlog::error("file not found");
     }
 }

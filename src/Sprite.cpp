@@ -57,6 +57,11 @@ float Sprite::getRotation() const
     return sprite.getRotation();
 }
 
+void Sprite::setFillColor(sf::Color fillColor)
+{
+    sprite.setColor(fillColor);
+}
+
 void Sprite::move(sf::Vector2f aPosition)
 {
     sprite.move(aPosition);
