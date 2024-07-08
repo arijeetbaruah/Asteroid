@@ -3,64 +3,77 @@
 #include "../include/Text.hpp"
 #include "spdlog/spdlog.h"
 
-Button::Button(Game* aGame, std::string fontFile, std::string aText): game(aGame), text(std::make_shared<Text>(game, fontFile, aText)), isClicked(false), isHovered(false)
+#if _DEBUG
+#define ASSET_SPRITES "../assets/sprites/"
+#else
+#define ASSET_SPRITES "./assets/sprites/"
+#endif
+
+Button::Button(Game* aGame, std::string fontFile, std::string aText)
+    : game(aGame), text(std::make_shared<Text>(game, fontFile, aText)), isClicked(false), isHovered(false)
 {
-	buttonShape.setFillColor(sf::Color::White);
     text->setFillColor(sf::Color::Black);
 
-    sf::FloatRect _bounds = buttonShape.getLocalBounds();
-    buttonShape.setOrigin(_bounds.left + _bounds.width / 2.0f, _bounds.top + _bounds.height / 2.0f);
+    std::string fileName = "Default3x.png";
+    if (!backgroundTexture.loadFromFile(ASSET_SPRITES + fileName)) {
+        spdlog::error("Error loading background image");
+    }
+    fileName = "Hover3x.png";
+    if (!hoverTexture.loadFromFile(ASSET_SPRITES + fileName)) {
+        spdlog::error("Error loading background image");
+    }
+    background.setTexture(backgroundTexture);
+    background.setScale(8, 5);
+
+    sf::FloatRect _bounds = background.getLocalBounds();
+    background.setOrigin(_bounds.left + _bounds.width / 2.0f, _bounds.top + _bounds.height / 2.0f);
 }
 
 void Button::reset()
 {
     isHovered = false;
     isClicked = false;
-    buttonShape.setFillColor(sf::Color::White);
 }
 
 void Button::setCharacterSize(unsigned int aSize)
 {
-	text->setCharacterSize(aSize);
-    sf::FloatRect _bounds = text->getLocalBounds();
-    sf::Vector2f _size(_bounds.width + 10, _bounds.height + 5);
-    buttonShape.setSize(_size);
+    text->setCharacterSize(aSize);
 }
 
 void Button::setFillColor(sf::Color aColor)
 {
-	text->setFillColor(aColor);
+    text->setFillColor(aColor);
 }
 
 void Button::setStyle(sf::Text::Style aStyle)
 {
-	text->setStyle(aStyle);
+    text->setStyle(aStyle);
 }
 
 void Button::setText(std::string aText)
 {
-	text->setText(aText);
+    text->setText(aText);
 }
 
 void Button::setPosition(sf::Vector2f aPosition)
 {
-	text->setPosition(aPosition);
-	buttonShape.setPosition(aPosition);
+    text->setPosition(aPosition);
+    background.setPosition(aPosition);
 }
 
 void Button::setPosition(float x, float y)
 {
-	text->setPosition(x, y);
-	buttonShape.setPosition(x, y);
+    text->setPosition(x, y);
+    background.setPosition(x, y);
 
-    sf::FloatRect _bounds = buttonShape.getLocalBounds();
-    buttonShape.setOrigin(_bounds.left + _bounds.width / 2.0f, _bounds.top + _bounds.height / 2.0f);
+    sf::FloatRect _bounds = background.getLocalBounds();
+    background.setOrigin(_bounds.left + _bounds.width / 2.0f, _bounds.top + _bounds.height / 2.0f);
 }
 
 void Button::handleInput(sf::Event aEvent)
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(game->window);
-    sf::FloatRect buttonRect = buttonShape.getGlobalBounds();
+    sf::FloatRect buttonRect = background.getGlobalBounds();
 
     if (buttonRect.contains(static_cast<sf::Vector2f>(mousePos)) && aEvent.type == sf::Event::MouseButtonPressed && aEvent.mouseButton.button == sf::Mouse::Left) {
         if (!isClicked) {
@@ -72,8 +85,8 @@ void Button::handleInput(sf::Event aEvent)
 
 void Button::update(sf::Time& elapsed)
 {
-	sf::Vector2i mousePos = sf::Mouse::getPosition(game->window);
-	sf::FloatRect buttonRect = buttonShape.getGlobalBounds();
+    sf::Vector2i mousePos = sf::Mouse::getPosition(game->window);
+    sf::FloatRect buttonRect = background.getGlobalBounds();
 
     if (buttonRect.contains(static_cast<sf::Vector2f>(mousePos))) {
         if (!isHovered) {
@@ -89,25 +102,27 @@ void Button::update(sf::Time& elapsed)
     }
 }
 
-void Button::onHoverEnter() {
-    buttonShape.setFillColor(sf::Color::Green);
+void Button::onHoverEnter()
+{
+    background.setTexture(hoverTexture);
     spdlog::info("Pointer entered button area.");
 }
 
-void Button::onHoverLeave() {
-    buttonShape.setFillColor(sf::Color::White);
+void Button::onHoverLeave()
+{
+    background.setTexture(backgroundTexture);
     spdlog::info("Pointer left button area.");
 }
 
-void Button::onClick() {
-    buttonShape.setFillColor(sf::Color::Blue);
+void Button::onClick()
+{
     spdlog::info("Button clicked!");
 }
 
 void Button::render()
 {
-    game->window.draw(buttonShape);
-	text->render();
+    game->window.draw(background);
+    text->render();
 }
 
 bool Button::IsHovered() const

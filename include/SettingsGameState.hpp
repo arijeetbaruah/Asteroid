@@ -24,6 +24,7 @@ private:
 	std::shared_ptr<Text> masterVolumn;
 	std::shared_ptr<Text> musicVolumn;
 	std::shared_ptr<Button> applyBtn;
+	std::shared_ptr<Button> backBtn;
 
 	int selectedOptions;
 

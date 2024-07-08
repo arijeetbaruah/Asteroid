@@ -10,7 +10,24 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_Declare(GLM
     GIT_REPOSITORY https://github.com/g-truc/glm.git)
-FetchContent_MakeAvailable(SFML GLM)
+FetchContent_Declare(
+    yaml-cpp
+    GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+    GIT_TAG master
+)
+FetchContent_MakeAvailable(SFML GLM yaml-cpp)
+
+if(NOT yaml-cpp_POPULATED)
+  message(STATUS "Fetching yaml-cpp...")
+  FetchContent_Populate(yaml-cpp)
+  add_subdirectory(${yaml-cpp_SOURCE_DIR} ${yaml-cpp_BINARY_DIR})
+endif()
+
+# Set Boost root directory
+set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/plugins/boost_1_85_0/build)
+
+# Find Boost components
+find_package(Boost REQUIRED COMPONENTS filesystem json system)
 
 # Set Boost root directory
 set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/plugins/boost_1_85_0/build)
@@ -34,6 +51,7 @@ target_link_libraries(AsteroidGame PRIVATE sfml-audio)
 target_link_libraries(AsteroidGame PRIVATE glm::glm)
 target_link_libraries(AsteroidGame PRIVATE spdlog::spdlog)
 target_link_libraries(AsteroidGame PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(AsteroidGame PRIVATE yaml-cpp::yaml-cpp)
 target_compile_features(AsteroidGame PRIVATE cxx_std_17)
 
 if(WIN32)

@@ -10,35 +10,45 @@ SettingsGameState::SettingsGameState(Game* mGame) : game(mGame)
 	masterVolumn = std::make_shared<Text>(game, "PlayfairDisplay.ttf", "Master Volume");
 	musicVolumn = std::make_shared<Text>(game, "PlayfairDisplay.ttf", "Music Volume");
 	applyBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Apply");
+	backBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Back");
 }
 
 void SettingsGameState::enter()
 {
 	selectedOptions = 0;
 	sliderDirection = SliderDirection::NONE;
-	settings.masterVolume = game->settingsData.masterVolume;
-	settings.masterVolume = game->settingsData.musicVolume;
+	if (game->getFileReadWrite()->exists(settingsSaveFile))
+	{
+		std::string yamlStr = game->getFileReadWrite()->readFile(settingsSaveFile);
+		game->settingsData = SettingsData::fromYAML(yamlStr);
+		settings = game->settingsData;
+	}
 
 	masterVolumn->setFillColor(sf::Color::White);
 	masterVolumn->setCharacterSize(50);
 	masterVolumn->setStyle(sf::Text::Bold);
 	masterVolumn->setPosition(game->window.getSize().x / 2, 100);
-	masterVolumn->setText("Master Volume " + std::to_string((int)settings.masterVolume));
+	masterVolumn->setText("Master Volume " + std::to_string((int)game->settingsData.masterVolume));
 
 	musicVolumn->setFillColor(sf::Color::Red);
 	musicVolumn->setCharacterSize(50);
 	musicVolumn->setStyle(sf::Text::Bold);
 	musicVolumn->setPosition(game->window.getSize().x / 2, 300);
-	musicVolumn->setText("Music Volume " + std::to_string((int)settings.masterVolume));
+	musicVolumn->setText("Music Volume " + std::to_string((int)game->settingsData.musicVolume));
 
 	applyBtn->setCharacterSize(50);
 	applyBtn->setStyle(sf::Text::Bold);
 	applyBtn->setPosition((game->window.getSize().x / 2) + 100, 900);
+
+	backBtn->setCharacterSize(50);
+	backBtn->setStyle(sf::Text::Bold);
+	backBtn->setPosition((game->window.getSize().x / 2) - 100, 900);
 }
 
 void SettingsGameState::handleInput(sf::Event event)
 {
 	applyBtn->handleInput(event);
+	backBtn->handleInput(event);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
@@ -83,8 +93,7 @@ void SettingsGameState::update(sf::Time elapsed)
 	{
 		game->settingsData = settings;
 
-		std::string settingsData = std::to_string(settings.masterVolume) + "," + std::to_string((int)settings.musicVolume);
-		game->getFileReadWrite()->createFile(settingsSaveFile, settingsData);
+		game->getFileReadWrite()->createFile(settingsSaveFile, settings.toYAML());
 	}
 }
 
@@ -93,6 +102,7 @@ void SettingsGameState::render()
 	masterVolumn->render();
 	musicVolumn->render();
 	applyBtn->render();
+	backBtn->render();
 }
 
 void SettingsGameState::exit()

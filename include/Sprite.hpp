@@ -29,6 +29,8 @@ public:
 
 	float getRotation() const;
 
+	void setFillColor(sf::Color fillColor);
+
 	void move(sf::Vector2f aPosition);
 	void move(float x, float y);
 	
