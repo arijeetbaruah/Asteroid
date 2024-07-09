@@ -1,82 +1,54 @@
 #include "../include/FileReadWrite.hpp"
 #include <fstream>
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
+#include <sstream>
+#include <filesystem>
 #include <spdlog/spdlog.h>
 
-namespace fs = boost::filesystem;
-
 bool FileReadWrite::exists(const std::string& file) const {
-    fs::path filePath = file;
-    return fs::exists(filePath);
+    return std::filesystem::exists(file);
 }
 
 bool FileReadWrite::createDirectory(const std::string& dir) {
-    fs::path dirPath = dir;
-    try {
-        return fs::create_directory(dirPath);
-    }
-    catch (const fs::filesystem_error& err) {
-        spdlog::error("Error creating directory {}: {}", dir, err.what());
-        return false;
-    }
+    return std::filesystem::create_directory(dir);
 }
 
 bool FileReadWrite::createFile(const std::string& file, const std::string& content) {
-    fs::path filePath = file;
-    try {
-        boost::filesystem::ofstream ofs(filePath, std::ios::binary);
-        if (!ofs) {
-            spdlog::error("Error creating file {}", file);
-            return false;
-        }
-        ofs << content;
-        ofs.close();
-        return true;
-    }
-    catch (const fs::filesystem_error& err) {
-        spdlog::error("Error creating file {}: {}", file, err.what());
+
+    std::ofstream outFile(file, std::ios::out | std::ios::trunc);
+    if (!outFile)
+    {
+        outFile = std::ofstream(file, std::ios::out | std::ios::app);
+        outFile << content;
         return false;
     }
+    outFile << content;
+    return true;
 }
 
 std::string FileReadWrite::readFile(const std::string& file) {
-    fs::path filePath = file;
-    try {
-        boost::filesystem::ifstream ifs(filePath, std::ios::binary);
-        if (!ifs) {
-            spdlog::error("Error opening file for reading {}", file);
-            return "";
-        }
-        std::string content((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
-        return content;
-    }
-    catch (const fs::filesystem_error& err) {
-        spdlog::error("Error reading file {}: {}", file, err.what());
+    std::ifstream inFile(file);
+    if (!inFile)
+    {
         return "";
     }
+
+    std::stringstream buffer;
+    buffer << inFile.rdbuf();
+    return buffer.str();
 }
 
 bool FileReadWrite::copy(const std::string& src, const std::string& dest) {
-    fs::path srcPath = src;
-    fs::path destPath = dest;
-    try {
-        fs::copy(srcPath, destPath);
+    try
+    {
+        std::filesystem::copy_file(src, dest, std::filesystem::copy_options::overwrite_existing);
         return true;
     }
-    catch (const fs::filesystem_error& err) {
-        spdlog::error("Error copying {} to {}: {}", src, dest, err.what());
+    catch (const std::filesystem::filesystem_error&)
+    {
         return false;
     }
 }
 
 bool FileReadWrite::remove(const std::string& p) {
-    fs::path filePath = p;
-    try {
-        return fs::remove_all(filePath);
-    }
-    catch (const fs::filesystem_error& err) {
-        spdlog::error("Error removing {}: {}", p, err.what());
-        return false;
-    }
+    return std::filesystem::remove(p);
 }

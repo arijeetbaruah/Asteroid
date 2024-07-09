@@ -2,7 +2,7 @@
 
 #include "yaml-cpp/yaml.h"
 
-const std::string settingsSaveFile = "../save/settings.sav";
+const std::string settingsSaveFile = "/settings.sav";
 
 struct SettingsData
 {

@@ -22,8 +22,10 @@ Button::Button(Game* aGame, std::string fontFile, std::string aText)
     if (!hoverTexture.loadFromFile(ASSET_SPRITES + fileName)) {
         spdlog::error("Error loading background image");
     }
+    auto size = game->window.getSize();
+
     background.setTexture(backgroundTexture);
-    background.setScale(8, 5);
+    background.setScale(size.x / 200, 5);
 
     sf::FloatRect _bounds = background.getLocalBounds();
     background.setOrigin(_bounds.left + _bounds.width / 2.0f, _bounds.top + _bounds.height / 2.0f);
@@ -68,6 +70,16 @@ void Button::setPosition(float x, float y)
 
     sf::FloatRect _bounds = background.getLocalBounds();
     background.setOrigin(_bounds.left + _bounds.width / 2.0f, _bounds.top + _bounds.height / 2.0f);
+}
+
+void Button::setScale(float x, float y)
+{
+    background.setScale(x, y);
+}
+
+void Button::setScale(sf::Vector2f aSize)
+{
+    background.setScale(aSize);
 }
 
 void Button::handleInput(sf::Event aEvent)

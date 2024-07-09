@@ -16,33 +16,33 @@ SettingsGameState::SettingsGameState(Game* mGame) : game(mGame)
 void SettingsGameState::enter()
 {
 	selectedOptions = 0;
+
+	settings = game->settingsData;
+
 	sliderDirection = SliderDirection::NONE;
-	if (game->getFileReadWrite()->exists(settingsSaveFile))
-	{
-		std::string yamlStr = game->getFileReadWrite()->readFile(settingsSaveFile);
-		game->settingsData = SettingsData::fromYAML(yamlStr);
-		settings = game->settingsData;
-	}
+	sf::Vector2u size = game->window.getSize();
 
 	masterVolumn->setFillColor(sf::Color::White);
 	masterVolumn->setCharacterSize(50);
 	masterVolumn->setStyle(sf::Text::Bold);
-	masterVolumn->setPosition(game->window.getSize().x / 2, 100);
+	masterVolumn->setPosition(size.x / 2, 100);
 	masterVolumn->setText("Master Volume " + std::to_string((int)game->settingsData.masterVolume));
 
 	musicVolumn->setFillColor(sf::Color::Red);
 	musicVolumn->setCharacterSize(50);
 	musicVolumn->setStyle(sf::Text::Bold);
-	musicVolumn->setPosition(game->window.getSize().x / 2, 300);
+	musicVolumn->setPosition(size.x / 2, 300);
 	musicVolumn->setText("Music Volume " + std::to_string((int)game->settingsData.musicVolume));
 
 	applyBtn->setCharacterSize(50);
 	applyBtn->setStyle(sf::Text::Bold);
-	applyBtn->setPosition((game->window.getSize().x / 2) + 100, 900);
+	applyBtn->setScale(size.x / 300, 5);
+	applyBtn->setPosition((size.x / 2) + 200, 900);
 
 	backBtn->setCharacterSize(50);
 	backBtn->setStyle(sf::Text::Bold);
-	backBtn->setPosition((game->window.getSize().x / 2) - 100, 900);
+	backBtn->setScale(size.x / 300, 5);
+	backBtn->setPosition((size.x / 2) - 200, 900);
 }
 
 void SettingsGameState::handleInput(sf::Event event)
@@ -88,12 +88,18 @@ void SettingsGameState::handleInput(sf::Event event)
 void SettingsGameState::update(sf::Time elapsed)
 {
 	applyBtn->update(elapsed);
+	backBtn->update(elapsed);
 
 	if (applyBtn->IsClicked())
 	{
 		game->settingsData = settings;
 
-		game->getFileReadWrite()->createFile(settingsSaveFile, settings.toYAML());
+		game->getFileReadWrite()->createFile(settingsSaveFilePath + settingsSaveFile, settings.toYAML());
+	}
+
+	if (backBtn->IsClicked())
+	{
+		game->gotoMainMenu();
 	}
 }
 
