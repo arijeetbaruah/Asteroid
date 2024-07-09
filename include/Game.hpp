@@ -6,6 +6,12 @@
 #include <vector>
 #include "./SettingsData.hpp"
 
+#if _DEBUG
+const std::string settingsSaveFilePath = "../save";
+#else
+const std::string settingsSaveFilePath = "./save";
+#endif
+
 class BaseGameState;
 class GameStateMachine;
 class MainMenuGameState;

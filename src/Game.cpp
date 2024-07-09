@@ -8,12 +8,11 @@
 #include "../include/GameGameState.hpp"
 #include "../include/FileReadWrite.hpp"
 
-#include "boost/json.hpp"
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <spdlog/spdlog.h>
 
-#include "spdlog/spdlog.h"
 
 // for string delimiter
 std::vector<std::string> split(std::string s, std::string delimiter) {
@@ -46,14 +45,14 @@ Game::Game(sf::Vector2<unsigned int> aWindowSize, std::string name):
 
 	setState(mainMenuState);
 
-    if (fileReadWrite->exists(settingsSaveFile))
+    if (fileReadWrite->exists(settingsSaveFilePath + settingsSaveFile))
     {
-        std::string yamlStr = fileReadWrite->readFile(settingsSaveFile);
+        std::string yamlStr = fileReadWrite->readFile(settingsSaveFilePath + settingsSaveFile);
         settingsData = SettingsData::fromYAML(yamlStr);
     }
     else
     {
-        fileReadWrite->createFile(settingsSaveFile, settingsData.toYAML());
+        fileReadWrite->createFile(settingsSaveFilePath + settingsSaveFile, settingsData.toYAML());
         spdlog::error("file not found");
     }
 }

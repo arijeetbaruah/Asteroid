@@ -28,6 +28,8 @@ public:
     void setText(std::string aText);
     void setPosition(sf::Vector2f aPosition);
     void setPosition(float x, float y);
+    void setScale(float x, float y);
+    void setScale(sf::Vector2f aSize);
     void handleInput(sf::Event handleInput);
     void update(sf::Time& elapsed);
     void render();
