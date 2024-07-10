@@ -7,8 +7,8 @@ Popup::Popup(Game* aGame, std::string fontFile, std::string aText, std::function
 	: game(aGame), onApply(aOnApply), onCancel(aOnCancel), isEnable(false)
 {
 	text = std::make_shared<Text>(game, fontFile, aText);
-	applyBtn = std::make_shared<Button>(game, fontFile, "OK", std::bind(&Popup::onApply, this));
-	cancelBtn = std::make_shared<Button>(game, fontFile, "Cancel", std::bind(&Popup::onCancel, this));
+	applyBtn = std::make_shared<Button>(game, fontFile, "OK", std::bind(&Popup::onApplyEvent, this));
+	cancelBtn = std::make_shared<Button>(game, fontFile, "Cancel", std::bind(&Popup::onCancelEvent, this));
 
 	sf::Vector2u scale = game->window.getSize();
 	backgound = sf::RectangleShape(sf::Vector2f(scale.x / 2, scale.y / 2));
@@ -26,14 +26,33 @@ Popup::Popup(Game* aGame, std::string fontFile, std::string aText, std::function
 	cancelBtn->setScale(sf::Vector2f(scale.x / 500, 5));
 }
 
-void Popup::Hide()
+void Popup::hidePop()
 {
 	isEnable = false;
 }
 
-void Popup::Show()
+void Popup::showPop()
 {
 	isEnable = true;
+	
+	applyBtn->reset();
+	cancelBtn->reset();
+}
+
+bool Popup::getEnable() const
+{
+	return isEnable;
+}
+
+void Popup::handleInput(sf::Event event)
+{
+	if (!isEnable)
+	{
+		return;
+	}
+
+	applyBtn->handleInput(event);
+	cancelBtn->handleInput(event);
 }
 
 void Popup::update(sf::Time& elapsed)

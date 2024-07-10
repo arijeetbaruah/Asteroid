@@ -87,7 +87,7 @@ void Button::handleInput(sf::Event aEvent)
     sf::Vector2i mousePos = sf::Mouse::getPosition(game->window);
     sf::FloatRect buttonRect = background.getGlobalBounds();
 
-    if (buttonRect.contains(static_cast<sf::Vector2f>(mousePos)) && aEvent.type == sf::Event::MouseButtonPressed && aEvent.mouseButton.button == sf::Mouse::Left) {
+    if (isHovered && aEvent.type == sf::Event::MouseButtonPressed && aEvent.mouseButton.button == sf::Mouse::Left) {
         if (!isClicked) {
             isClicked = true;
             onClick();

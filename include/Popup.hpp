@@ -26,10 +26,15 @@ private:
 public:
 	Popup(Game* aGame, std::string fontFile, std::string aText, std::function<void()> onApply, std::function<void()> onCancel);
 
-	void Hide();
-	void Show();
+	void hidePop();
+	void showPop();
+	bool getEnable() const;
 
+	void handleInput(sf::Event event);
 	void update(sf::Time& elapsed);
 	void render();
+
+	void onApplyEvent() { onApply(); }
+	void onCancelEvent() { onCancel(); }
 };
 

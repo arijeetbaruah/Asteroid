@@ -45,12 +45,15 @@ void SettingsGameState::enter()
 	backBtn->setStyle(sf::Text::Bold);
 	backBtn->setScale(size.x / 300, 5);
 	backBtn->setPosition((size.x / 2) - 200, 900);
+
+	popup->hidePop();
 }
 
 void SettingsGameState::handleInput(sf::Event event)
 {
 	applyBtn->handleInput(event);
 	backBtn->handleInput(event);
+	popup->handleInput(event);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
@@ -89,9 +92,10 @@ void SettingsGameState::handleInput(sf::Event event)
 
 void SettingsGameState::update(sf::Time elapsed)
 {
-	popup->update(elapsed);
 	applyBtn->update(elapsed);
 	backBtn->update(elapsed);
+
+	popup->update(elapsed);
 }
 
 void SettingsGameState::render()
@@ -115,7 +119,7 @@ void SettingsGameState::OnPopupApply()
 
 void SettingsGameState::OnPopupCancel()
 {
-	popup->Hide();
+	popup->hidePop();
 }
 
 void SettingsGameState::updateUI()
@@ -186,7 +190,9 @@ void SettingsGameState::onBackClick()
 {
 	if (hasChanges)
 	{
-		popup->Show();
+		popup->showPop();
+		applyBtn->reset();
+		backBtn->reset();
 	}
 	else
 	{
