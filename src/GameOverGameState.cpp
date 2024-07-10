@@ -8,7 +8,7 @@ GameOverGameState::GameOverGameState(Game* aGame): game(aGame)
 	gameOverTxt = std::make_shared<Text>(game, "PlayfairDisplay.ttf", "Game Over!!");
 	gameOverTxt->setFillColor(sf::Color::Red);
 
-	gameOverBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "return");
+	gameOverBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "return", std::bind(&GameOverGameState::onGameOverBtnClick, this));
 }
 
 void GameOverGameState::enter()
@@ -28,11 +28,6 @@ void GameOverGameState::handleInput(sf::Event aEvent)
 void GameOverGameState::update(sf::Time elapsed)
 {
 	gameOverBtn->update(elapsed);
-
-	if (gameOverBtn->IsClicked())
-	{
-		game->gotoMainMenu();
-	}
 }
 
 void GameOverGameState::render()
@@ -44,4 +39,9 @@ void GameOverGameState::render()
 void GameOverGameState::exit()
 {
 	gameOverBtn->reset();
+}
+
+void GameOverGameState::onGameOverBtnClick()
+{
+	game->gotoMainMenu();
 }

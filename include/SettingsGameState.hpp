@@ -3,10 +3,12 @@
 #include "./BaseGameState.hpp"
 #include "./SettingsData.hpp"
 #include <SFML/Graphics.hpp>
+#include <functional>
 
 class Game;
 class Button;
 class Text;
+class Popup;
 
 enum SliderDirection
 {
@@ -25,11 +27,14 @@ private:
 	std::shared_ptr<Text> musicVolumn;
 	std::shared_ptr<Button> applyBtn;
 	std::shared_ptr<Button> backBtn;
+	std::shared_ptr<Popup> popup;
 
 	int selectedOptions;
 
 	SettingsData settings;
 	SliderDirection sliderDirection;
+
+	bool hasChanges;
 
 public:
 	SettingsGameState(Game* mGame);
@@ -41,7 +46,14 @@ public:
 	void render() override;
 	void exit() override;
 
+public:
+	void OnPopupApply();
+	void OnPopupCancel();
+
 private:
 	void updateUI();
 	void updateVolume();
+
+	void onApplyClick();
+	void onBackClick();
 };

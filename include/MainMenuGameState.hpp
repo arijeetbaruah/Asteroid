@@ -33,5 +33,10 @@ public:
 
 	void exit() override;
 
+public:
+	void onStartBtn();
+	void onSettingsBtn();
+	void onExitBtn();
+
 };
 

@@ -2,15 +2,17 @@
 #include "../include/SettingsData.hpp"
 #include "../include/Text.hpp"
 #include "../include/Button.hpp"
+#include "../include/Popup.hpp"
 #include "../include/FileReadWrite.hpp"
 #include "../include/Game.hpp"
 
-SettingsGameState::SettingsGameState(Game* mGame) : game(mGame)
+SettingsGameState::SettingsGameState(Game* mGame) : game(mGame), hasChanges(false)
 {
 	masterVolumn = std::make_shared<Text>(game, "PlayfairDisplay.ttf", "Master Volume");
 	musicVolumn = std::make_shared<Text>(game, "PlayfairDisplay.ttf", "Music Volume");
-	applyBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Apply");
-	backBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Back");
+	applyBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Apply", std::bind(&SettingsGameState::onApplyClick, this));
+	backBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Back", std::bind(&SettingsGameState::onBackClick, this));
+	popup = std::make_shared<Popup>(game, "PlayfairDisplay.ttf", "You have unsaved changes! Are you sure?", std::bind(&SettingsGameState::OnPopupApply, this), std::bind(&SettingsGameState::OnPopupCancel, this));
 }
 
 void SettingsGameState::enter()
@@ -87,20 +89,9 @@ void SettingsGameState::handleInput(sf::Event event)
 
 void SettingsGameState::update(sf::Time elapsed)
 {
+	popup->update(elapsed);
 	applyBtn->update(elapsed);
 	backBtn->update(elapsed);
-
-	if (applyBtn->IsClicked())
-	{
-		game->settingsData = settings;
-
-		game->getFileReadWrite()->createFile(settingsSaveFilePath + settingsSaveFile, settings.toYAML());
-	}
-
-	if (backBtn->IsClicked())
-	{
-		game->gotoMainMenu();
-	}
 }
 
 void SettingsGameState::render()
@@ -109,10 +100,22 @@ void SettingsGameState::render()
 	musicVolumn->render();
 	applyBtn->render();
 	backBtn->render();
+
+	popup->render();
 }
 
 void SettingsGameState::exit()
 {
+}
+
+void SettingsGameState::OnPopupApply()
+{
+	game->gotoMainMenu();
+}
+
+void SettingsGameState::OnPopupCancel()
+{
+	popup->Hide();
 }
 
 void SettingsGameState::updateUI()
@@ -168,4 +171,25 @@ void SettingsGameState::updateVolume()
 		}
 	}
 
+	hasChanges = true;
+
+}
+
+void SettingsGameState::onApplyClick()
+{
+	game->settingsData = settings;
+
+	game->getFileReadWrite()->createFile(settingsSaveFilePath + settingsSaveFile, settings.toYAML());
+}
+
+void SettingsGameState::onBackClick()
+{
+	if (hasChanges)
+	{
+		popup->Show();
+	}
+	else
+	{
+		game->gotoMainMenu();
+	}
 }
