@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <functional>
 
 class Text;
 class Game;
@@ -18,8 +19,10 @@ private:
     bool isHovered;
     bool isClicked;
 
+    std::function<void()> onClickEvent;
+
 public:
-    Button(Game* game, std::string fontFile, std::string aText);
+    Button(Game* game, std::string fontFile, std::string aText, std::function<void()> onClick);
 
     void reset();
     void setCharacterSize(unsigned int aSize);

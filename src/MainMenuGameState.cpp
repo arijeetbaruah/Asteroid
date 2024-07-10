@@ -9,9 +9,9 @@
 MainMenuGameState::MainMenuGameState(Game* mGame): game(mGame)
 {
 	mainMenuText = std::make_shared<Text>(game, "PlayfairDisplay.ttf", "Asteroid");
-	startBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Start");
-	settingsBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Settings");
-	exitBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Quit");
+	startBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Start", std::bind(&MainMenuGameState::onStartBtn, this));
+	settingsBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Settings", std::bind(&MainMenuGameState::onSettingsBtn, this));
+	exitBtn = std::make_shared<Button>(game, "PlayfairDisplay.ttf", "Quit", std::bind(&MainMenuGameState::onExitBtn, this));
 	backgroundSprite = std::make_shared<Sprite>(game, "starBG.jpg");
 	music = std::make_shared<Music>("asteroid-110229.mp3");
 }
@@ -58,26 +58,6 @@ void MainMenuGameState::update(sf::Time elapsed)
 	startBtn->update(elapsed);
 	settingsBtn->update(elapsed);
 	exitBtn->update(elapsed);
-
-	if (startBtn->IsClicked())
-	{
-		spdlog::info("Game Start!!");
-		music->stop();
-		game->StartGame();
-		return;
-	}
-
-	if (settingsBtn->IsClicked())
-	{
-		game->gotoSettings();
-		return;
-	}
-
-	if (exitBtn->IsClicked())
-	{
-		game->window.close();
-		return;
-	}
 }
 
 void MainMenuGameState::render()
@@ -94,4 +74,21 @@ void MainMenuGameState::exit()
 	startBtn->reset();
 	settingsBtn->reset();
 	exitBtn->reset();
+}
+
+void MainMenuGameState::onStartBtn()
+{
+	spdlog::info("Game Start!!");
+	music->stop();
+	game->StartGame();
+}
+
+void MainMenuGameState::onSettingsBtn()
+{
+	game->gotoSettings();
+}
+
+void MainMenuGameState::onExitBtn()
+{
+	game->window.close();
 }

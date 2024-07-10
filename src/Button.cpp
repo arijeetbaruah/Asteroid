@@ -9,8 +9,8 @@
 #define ASSET_SPRITES "./assets/sprites/"
 #endif
 
-Button::Button(Game* aGame, std::string fontFile, std::string aText)
-    : game(aGame), text(std::make_shared<Text>(game, fontFile, aText)), isClicked(false), isHovered(false)
+Button::Button(Game* aGame, std::string fontFile, std::string aText, std::function<void()> onClick)
+    : game(aGame), text(std::make_shared<Text>(game, fontFile, aText)), isClicked(false), isHovered(false), onClickEvent(onClick)
 {
     text->setFillColor(sf::Color::Black);
 
@@ -87,7 +87,7 @@ void Button::handleInput(sf::Event aEvent)
     sf::Vector2i mousePos = sf::Mouse::getPosition(game->window);
     sf::FloatRect buttonRect = background.getGlobalBounds();
 
-    if (buttonRect.contains(static_cast<sf::Vector2f>(mousePos)) && aEvent.type == sf::Event::MouseButtonPressed && aEvent.mouseButton.button == sf::Mouse::Left) {
+    if (isHovered && aEvent.type == sf::Event::MouseButtonPressed && aEvent.mouseButton.button == sf::Mouse::Left) {
         if (!isClicked) {
             isClicked = true;
             onClick();
@@ -129,6 +129,7 @@ void Button::onHoverLeave()
 void Button::onClick()
 {
     spdlog::info("Button clicked!");
+    onClickEvent();
 }
 
 void Button::render()

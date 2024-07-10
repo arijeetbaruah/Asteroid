@@ -24,4 +24,7 @@ public:
 	void update(sf::Time elapsed) override;
 	void render() override;
 	void exit() override;
+
+private:
+	void onGameOverBtnClick();
 };
