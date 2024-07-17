@@ -1,7 +1,38 @@
-# Asteriod
+#Asteroid
 
-## How to build
+This is a simple Asteroid game implemented using C++ and SFML.
+## Features
 
-1. Clone the project
-2. build project using cmake
-3. open the project and import the 'resource.h' and 'AsteroidGame.rc' files to the project
+  Basic game mechanics for controlling a spaceship.
+  Collision detection between spaceship and asteroids.
+  Scoring system based on surviving time.
+
+## Requirements
+
+  - C++11 or later
+  - SFML
+  - glm
+  - yaml-cpp
+  - spdlog
+
+## Installation
+
+  Clone the repository:
+
+    git clone https://github.com/arijeetbaruah/Asteroid.git
+    cd Asteroid
+
+  Build the project using CMake:
+
+    mkdir build
+    cd build
+    cmake ..
+    make
+
+Run the executable:
+
+    ./Asteroid
+
+Controls
+  - Arrow keys to move the spaceship.
+  - Spacebar to shoot.
