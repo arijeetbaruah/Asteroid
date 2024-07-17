@@ -34,5 +34,5 @@ Run the executable:
     ./Asteroid
 
 Controls
-  - Arrow keys to move the spaceship.
+  - WASD keys to move the spaceship.
   - Spacebar to shoot.
