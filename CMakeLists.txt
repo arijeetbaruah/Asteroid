@@ -29,11 +29,14 @@ file(GLOB_RECURSE HEADERS "include/*.h")
 file(GLOB_RECURSE HEADERS_PP "include/*.hpp")
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
+file(GLOB_RECURSE RESOURCES "assets/*.rc")
+file(GLOB_RECURSE RESOURCES_HEADER "assets/*.h")
+
 include_directories(
     "src"
 )
 
-add_executable(AsteroidGame ${HEADERS} ${HEADERS_PP} ${SOURCES})
+add_executable(AsteroidGame ${HEADERS} ${HEADERS_PP} ${SOURCES} ${RESOURCES} ${RESOURCES_HEADER})
 target_link_libraries(AsteroidGame PRIVATE sfml-graphics)
 target_link_libraries(AsteroidGame PRIVATE sfml-audio)
 target_link_libraries(AsteroidGame PRIVATE glm::glm)
